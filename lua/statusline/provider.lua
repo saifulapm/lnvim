@@ -1,37 +1,38 @@
-local as = require('utils')
-local api, uv, fn, fmt = vim.api, vim.loop, vim.fn, string.format
+local u = require('utils.const')
+local api, uv = vim.api, vim.loop
 local pd = {}
+local arrow = u.get_arrow()
 
 local function alias_mode()
   return {
-    n = { "NRM", "Normal" },
-    niI = { "N·I", "Normal" }, -- i_CTRL_O
-    niR = { "N·R", "Normal" }, -- R_CTRL_O
-    niV = { "NRV", "Normal" }, -- gR_CTRL_O
-    no = { "NOP", "Normal" },
-    nov = { "NOV", "Normal" }, -- o_v
-    noV = { "NVL", "Normal" }, -- o_V
-    ["no"] = { "NVB", "Normal" }, -- o_CTRL-V
-    nt = { "N·T", "Normal" },
-    i = { "INS", "Insert" },
-    ix = { "I·X", "Insert" }, -- i_CTRL_X
-    ic = { "I·C", "Insert" }, -- i_CTRL_N | i_CTRL_P
-    v = { "VIS", "Visual" },
-    [""] = { "V·B", "Visual" },
-    V = { "V·L", "Visual" },
-    vs = { "S·V", "Visual" }, -- gh_CTRL_O
-    Vs = { "SVL", "Visual" }, -- gH_CTRL_O
-    c = { "CMD", "Command" },
-    s = { "SEL", "Select" }, -- gh
-    S = { "S·L", "Select" }, -- gH
-    [""] = { "S·B", "Select" }, -- g_CTRL_H
-    R = { "REP", "Replace" }, -- R
-    Rx = { "R·X", "Replace" }, -- R_CTRL_X
-    Rc = { "R·C", "Replace" }, -- R_CTRL_P
-    Rv = { "R·V", "Replace" }, -- gR
-    Rvc = { "RVC", "Replace" }, -- gR_CTRL_P
-    Rvx = { "RVX", "Replace" }, -- gR_CTRL_X
-    t = { "TRM", "Terminal" },
+    n = { 'NRM', 'Normal' },
+    niI = { 'N·I', 'Normal' }, -- i_CTRL_O
+    niR = { 'N·R', 'Normal' }, -- R_CTRL_O
+    niV = { 'NRV', 'Normal' }, -- gR_CTRL_O
+    no = { 'NOP', 'Normal' },
+    nov = { 'NOV', 'Normal' }, -- o_v
+    noV = { 'NVL', 'Normal' }, -- o_V
+    ['no'] = { 'NVB', 'Normal' }, -- o_CTRL-V
+    nt = { 'N·T', 'Normal' },
+    i = { 'INS', 'Insert' },
+    ix = { 'I·X', 'Insert' }, -- i_CTRL_X
+    ic = { 'I·C', 'Insert' }, -- i_CTRL_N | i_CTRL_P
+    v = { 'VIS', 'Visual' },
+    [''] = { 'V·B', 'Visual' },
+    V = { 'V·L', 'Visual' },
+    vs = { 'S·V', 'Visual' }, -- gh_CTRL_O
+    Vs = { 'SVL', 'Visual' }, -- gH_CTRL_O
+    c = { 'CMD', 'Command' },
+    s = { 'SEL', 'Select' }, -- gh
+    S = { 'S·L', 'Select' }, -- gH
+    [''] = { 'S·B', 'Select' }, -- g_CTRL_H
+    R = { 'REP', 'Replace' }, -- R
+    Rx = { 'R·X', 'Replace' }, -- R_CTRL_X
+    Rc = { 'R·C', 'Replace' }, -- R_CTRL_P
+    Rv = { 'R·V', 'Replace' }, -- gR
+    Rvc = { 'RVC', 'Replace' }, -- gR_CTRL_P
+    Rvx = { 'RVX', 'Replace' }, -- gR_CTRL_X
+    t = { 'TRM', 'Terminal' },
   }
 end
 
@@ -40,11 +41,11 @@ function pd.mode()
   local result = {
     stl = function()
       local mode = api.nvim_get_mode().mode
-      return " " .. alias[mode][1] .. " "  or mode
+      return ' ' .. alias[mode][1] or mode
     end,
     name = function()
       local mode = api.nvim_get_mode().mode
-      return alias[mode][2] or "Normal"
+      return alias[mode][2] or 'Normal'
     end,
     event = { 'ModeChanged', 'BufEnter' },
   }
@@ -55,12 +56,10 @@ end
 function pd.mode_sep()
   local alias = alias_mode()
   local result = {
-    stl = function()
-      return ""
-    end,
+    stl = function() return arrow.right end,
     name = function()
       local mode = api.nvim_get_mode().mode
-      return alias[mode][2] .. "Sep" or "NormalSep"
+      return alias[mode][2] .. 'Sep' or 'NormalSep'
     end,
     event = { 'ModeChanged', 'BufEnter' },
   }
@@ -68,45 +67,41 @@ function pd.mode_sep()
   return result
 end
 
-local function path_sep()
-  return uv.os_uname().sysname == 'Windows_NT' and '\\' or '/'
-end
+local function path_sep() return uv.os_uname().sysname == 'Windows_NT' and '\\' or '/' end
 
 function pd.fileinfo()
   local function stl_path()
     local i = 1
     local trunc = 2
-    local path = vim.fn.expand("%:.:h")
-    local path_split = vim.split(path, "/")
+    local path = vim.fn.expand('%:.:h')
+    local path_split = vim.split(path, '/')
     local sep = path_sep()
-    sep = ("%%#StatusLinePathSep#%s%%#StatusLinePath#"):format(sep)
+    sep = ('%%#StatusLinePathSep#%s%%#StatusLinePath#'):format(sep)
     i = #path_split > trunc and #path_split - (trunc - 1) or i
-    path = table.concat(path_split, (" %s "):format(sep), i)
+    path = table.concat(path_split, (' %s '):format(sep), i)
 
-    if i > 1 then
-      path = ("%s%s"):format(("… %s "):format(sep), path)
-    end
+    if i > 1 then path = ('%s%s'):format(('… %s '):format(sep), path) end
 
     if path == '' then
-      path = ("%s%%#StatusLinePathArrow#"):format(path)
+      path = ('%s%%#StatusLinePathArrow#%s'):format(path, arrow.right)
     else
-      path = (" %s %%#StatusLinePathArrow#"):format(path)
+      path = (' %s%%#StatusLinePathArrow#%s'):format(path, arrow.right)
     end
 
-    local name = vim.fn.expand("%:.:t")
+    local name = vim.fn.expand('%:.:t')
     if name ~= '' then
-      name = ("%%#StatusLineFileName#%s"):format(name)
+      name = ('%%#StatusLineFileName#%s'):format(name)
       local ok, devicon = pcall(require, 'nvim-web-devicons')
       if ok then
         local icon = devicon.get_icon_by_filetype(vim.bo.filetype, { default = true })
-        -- icon = ("%%#DevIcon%s#%s%%#StatusLinePath#"):format(vim.bo.filetype, icon)
-        name = ("%s%s"):format(icon, (" %s "):format(name))
+        icon = ('%%#StatusLineIcon%s#%s%%#StatusLineFileName#'):format(vim.bo.filetype, icon)
+        name = ('%s%s'):format(icon, (' %s '):format(name))
       end
 
-      path = ("%s%s"):format(path, (" %s"):format(name))
+      path = ('%s%s'):format(path, (' %s'):format(name))
     end
 
-    path = ("%s%%#StatusLineFileArrow#"):format(path)
+    path = ('%s%%#StatusLineFileArrow#%s'):format(path, arrow.right)
 
     return path
   end
@@ -132,9 +127,7 @@ local function get_progress_messages()
       }
       table.insert(new_messages, new_report)
 
-      if ctx.done then
-        table.insert(progress_remove, { client = client, token = token })
-      end
+      if ctx.done then table.insert(progress_remove, { client = client, token = token }) end
     end
   end
 
@@ -162,9 +155,7 @@ function pd.lsp()
 
     if #res == 0 then
       local client = vim.lsp.get_active_clients({ bufnr = 0 })
-      if #client ~= 0 then
-        table.insert(res, client[1].name)
-      end
+      if #client ~= 0 then table.insert(res, client[1].name) end
     end
     return '%.20{"' .. table.concat(res, '') .. '"}'
   end
@@ -179,9 +170,8 @@ function pd.lsp()
 end
 
 local function gitsigns_data(type)
-  if not vim.b.gitsigns_status_dict then
-    return ''
-  end
+  ---@diagnostic disable-next-line: undefined-field
+  if not vim.b.gitsigns_status_dict then return '' end
 
   local val = vim.b.gitsigns_status_dict[type]
   val = (val == 0 or not val) and '' or tostring(val) .. (type == 'head' and '' or ' ')
@@ -261,8 +251,8 @@ end
 
 function pd.lnumcol()
   -- local sep = path_sep()
-  local arrow = ("%%#StatusLineLinesArrow#%s%%#StatusLineLines#"):format('')
-  local stl = (" %%-4.(%%l:%%c%%) %s %%L "):format(arrow)
+  local sep = ('%%#StatusLineLinesArrow#%s%%#StatusLineLines#'):format(arrow.left)
+  local stl = ('%%-4.(%%l:%%c%%) %s %%L '):format(sep)
   local result = {
     stl = stl,
     name = 'LineCol',
@@ -273,9 +263,7 @@ function pd.lnumcol()
 end
 
 local function diagnostic_info(severity)
-  if vim.diagnostic.is_disabled(0) then
-    return ''
-  end
+  if vim.diagnostic.is_disabled(0) then return '' end
 
   local signs = {
     ' ',
@@ -289,9 +277,7 @@ end
 
 function pd.diagError()
   local result = {
-    stl = function()
-      return diagnostic_info(1)
-    end,
+    stl = function() return diagnostic_info(1) end,
     name = 'diagError',
     event = { 'DiagnosticChanged' },
   }
@@ -300,9 +286,7 @@ end
 
 function pd.diagWarn()
   local result = {
-    stl = function()
-      return diagnostic_info(2)
-    end,
+    stl = function() return diagnostic_info(2) end,
     name = 'diagWarn',
     event = { 'DiagnosticChanged', 'BufEnter' },
   }
@@ -311,9 +295,7 @@ end
 
 function pd.diagInfo()
   local result = {
-    stl = function()
-      return diagnostic_info(3)
-    end,
+    stl = function() return diagnostic_info(3) end,
     name = 'diaginfo',
     event = { 'DiagnosticChanged', 'BufEnter' },
   }
@@ -322,9 +304,7 @@ end
 
 function pd.diagHint()
   local result = {
-    stl = function()
-      return diagnostic_info(4)
-    end,
+    stl = function() return diagnostic_info(4) end,
     name = 'diaghint',
     event = { 'DiagnosticChanged', 'BufEnter' },
   }

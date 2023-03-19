@@ -6,10 +6,8 @@ local M = {}
 -- @return g: Green (0-255)
 -- @return b: Blue (0-255)
 M.hex2rgb = function(hex)
-  local hash = string.sub(hex, 1, 1) == "#"
-  if string.len(hex) ~= (7 - (hash and 0 or 1)) then
-    return nil
-  end
+  local hash = string.sub(hex, 1, 1) == '#'
+  if string.len(hex) ~= (7 - (hash and 0 or 1)) then return nil end
 
   local r = tonumber(hex:sub(2 - (hash and 0 or 1), 3 - (hash and 0 or 1)), 16)
   local g = tonumber(hex:sub(4 - (hash and 0 or 1), 5 - (hash and 0 or 1)), 16)
@@ -22,19 +20,13 @@ end
 -- @param g: Green (0-255)
 -- @param b: Blue (0-255)
 -- @return The hexadecimal string representation of the color
-M.rgb2hex = function(r, g, b)
-  return string.format("#%02x%02x%02x", math.floor(r), math.floor(g), math.floor(b))
-end
+M.rgb2hex = function(r, g, b) return string.format('#%02x%02x%02x', math.floor(r), math.floor(g), math.floor(b)) end
 
 -- Helper function to convert a HSL color value to RGB
 -- Not to be used directly, use M.hsl2rgb instead
 M.hsl2rgb_helper = function(p, q, a)
-  if a < 0 then
-    a = a + 6
-  end
-  if a >= 6 then
-    a = a - 6
-  end
+  if a < 0 then a = a + 6 end
+  if a >= 6 then a = a - 6 end
   if a < 1 then
     return (q - p) * a + p
   elseif a < 3 then
@@ -94,15 +86,11 @@ M.rgb2hsl = function(r, g, b)
     h = 4 + (r - g) / (max - min)
   end
 
-  if not rawequal(type(h), "number") then
-    h = 0
-  end
+  if not rawequal(type(h), 'number') then h = 0 end
 
   h = h * 60
 
-  if h < 0 then
-    h = h + 360
-  end
+  if h < 0 then h = h + 360 end
 
   l = (min + max) / 2
 
@@ -147,12 +135,8 @@ end
 M.change_hex_hue = function(hex, percent)
   local h, s, l = M.hex2hsl(hex)
   h = h + (percent / 100)
-  if h > 360 then
-    h = 360
-  end
-  if h < 0 then
-    h = 0
-  end
+  if h > 360 then h = 360 end
+  if h < 0 then h = 0 end
   return M.hsl2hex(h, s, l)
 end
 
@@ -164,12 +148,8 @@ end
 M.change_hex_saturation = function(hex, percent)
   local h, s, l = M.hex2hsl(hex)
   s = s + (percent / 100)
-  if s > 1 then
-    s = 1
-  end
-  if s < 0 then
-    s = 0
-  end
+  if s > 1 then s = 1 end
+  if s < 0 then s = 0 end
   return M.hsl2hex(h, s, l)
 end
 
@@ -181,12 +161,8 @@ end
 M.change_hex_lightness = function(hex, percent)
   local h, s, l = M.hex2hsl(hex)
   l = l + (percent / 100)
-  if l > 1 then
-    l = 1
-  end
-  if l < 0 then
-    l = 0
-  end
+  if l > 1 then l = 1 end
+  if l < 0 then l = 0 end
   return M.hsl2hex(h, s, l)
 end
 
@@ -212,6 +188,32 @@ M.compute_gradient = function(hex1, hex2, steps)
   end
 
   return gradient
+end
+
+local function rgb(hex)
+  local rrggbb = string.gsub(hex, '#', '')
+  local r = rrggbb:sub(1, 2)
+  local g = rrggbb:sub(3, 4)
+  local b = rrggbb:sub(5, 6)
+  return { r = tonumber(r, 16), g = tonumber(g, 16), b = tonumber(b, 16) }
+end
+
+---Blend `top` over `bottom` to get pseudo-transparent color
+---@param top string|fun():string @hex color (#RRGGBB)
+---@param bottom string|fun():string @hex color (#RRGGBB)
+---@param alpha number @blend intensity, float (0.0 - 1.0) or integer (0 - 100)
+---@return string @#RRGGBB
+M.blend = function(top, bottom, alpha)
+  local a = alpha > 1 and (alpha / 100) or alpha
+  local b = rgb(type(bottom) == 'function' and bottom() or bottom)
+  local t = rgb(type(top) == 'function' and top() or top)
+
+  local function blend(c)
+    c = (a * t[c] + ((1 - a) * b[c]))
+    return math.floor(math.min(math.max(0, c), 255) + 0.5)
+  end
+
+  return ('#%02X%02X%02X'):format(blend('r'), blend('g'), blend('b'))
 end
 
 return M

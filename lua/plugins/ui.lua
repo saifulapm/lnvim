@@ -11,14 +11,18 @@ return {
   },
   {
     'echasnovski/mini.starter',
-    opts = function(_, opts) opts.header = table.concat(require('utils').get_weekday(), '\n') end,
-    config = function(plugin, opts)
-      plugin._.super.config(plugin, opts)
+    opts = function(_, opts)
+      opts.header = table.concat(require('utils').get_weekday(), '\n')
+      opts.content_hooks = nil
+      opts.footer = table.concat(require('utils.fortune').get_fortune(), '\n')
+    end,
+    config = function(_, opts)
+      require('mini.starter').setup(opts)
+
       vim.api.nvim_create_autocmd('User', {
         pattern = 'MiniStarterOpened',
         callback = function(args)
           vim.opt_local.laststatus = 0
-
           vim.api.nvim_create_autocmd('BufUnload', {
             buffer = args.buf,
             callback = function() vim.opt_local.laststatus = 3 end,
@@ -38,9 +42,9 @@ return {
     event = 'VeryLazy',
     dependencies = { 'kevinhwang91/promise-async' },
     keys = {
-      { 'zR', function() require('ufo').openAllFolds() end, 'open all folds' },
-      { 'zM', function() require('ufo').closeAllFolds() end, 'close all folds' },
-      { 'zP', function() require('ufo').peekFoldedLinesUnderCursor() end, 'preview fold' },
+      { 'zR', function() require('ufo').openAllFolds() end, desc = 'Open all folds' },
+      { 'zM', function() require('ufo').closeAllFolds() end, desc = 'Close all folds' },
+      { 'zP', function() require('ufo').peekFoldedLinesUnderCursor() end, desc = 'Preview Fold' },
     },
     opts = {
       open_fold_hl_timeout = 0,
@@ -71,7 +75,7 @@ return {
         table.insert(newVirtText, { suffix, 'MoreMsg' })
         return newVirtText
       end,
-      provider_selector = function(_, filetype, _)
+      provider_selector = function(buffer, filetype, _)
         local function customizeSelector(bufnr)
           local function handleFallbackException(err, providerName)
             if type(err) == 'string' and err:match('UfoFallbackException') then
@@ -86,9 +90,10 @@ return {
             :catch(function(err) return handleFallbackException(err, 'treesitter') end)
             :catch(function(err) return handleFallbackException(err, 'indent') end)
         end
-        local ftMap = { php = { 'indent' } }
 
-        return ftMap[filetype] or customizeSelector
+        if vim.api.nvim_buf_line_count(buffer) > 5000 or filetype == 'php' then return { 'indent' } end
+
+        return customizeSelector
       end,
     },
   },

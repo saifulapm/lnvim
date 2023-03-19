@@ -23,12 +23,6 @@ return {
       local augend = require('dial.augend')
       local config = require('dial.config')
 
-      local operators = augend.constant.new({
-        elements = { '&&', '||' },
-        word = false,
-        cyclic = true,
-      })
-
       local casing = augend.case.new({
         types = { 'camelCase', 'snake_case', 'PascalCase', 'SCREAMING_SNAKE_CASE' },
         cyclic = true,
@@ -74,6 +68,21 @@ return {
       { 'X', function() require('substitute.exchange').operator() end, mode = 'n' },
       { 'X', function() require('substitute.exchange').visual() end, mode = 'x' },
       { 'Xc', function() require('substitute.exchange').cancel() end, mode = { 'n', 'x' } },
+    },
+  },
+  {
+    'nvim-neo-tree/neo-tree.nvim',
+    keys = {
+      { '<C-n>', '<leader>fE', desc = 'Explorer NeoTree (root dir)', remap = true },
+    },
+    opts = {
+      window = {
+        mappings = { o = 'toggle_node', ['<CR>'] = 'open', ['<c-s>'] = 'open_split', ['<c-v>'] = 'open_vsplit' },
+      },
+      nesting_rules = {
+        ['dart'] = { 'freezed.dart', 'g.dart' },
+        ['json'] = { 'package.json', 'package-lock.json', 'bower.json', 'firebase.json', 'package.nls*.json' },
+      },
     },
   },
 }

@@ -1,12 +1,6 @@
-local pd = require('statusline.provider')
+local u = require('utils.const')
 local sp = {}
-
-local default_sep_icons = {
-  default = { left = "", right = " " },
-  round = { left = "", right = "" },
-  block = { left = "█", right = "█" },
-  arrow = { left = "", right = "" },
-}
+local arrow = u.get_arrow()
 
 function sp.sep()
   return {
@@ -17,14 +11,14 @@ end
 
 function sp.arrow_right()
   return {
-    stl = '',
+    stl = arrow.right,
     name = 'ArrowRight',
   }
 end
 
 function sp.arrow_left()
   return {
-    stl = '',
+    stl = arrow.left,
     name = 'ArrowLeft',
   }
 end
