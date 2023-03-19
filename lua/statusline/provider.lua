@@ -93,8 +93,17 @@ function pd.fileinfo()
       name = ('%%#StatusLineFileName#%s'):format(name)
       local ok, devicon = pcall(require, 'nvim-web-devicons')
       if ok then
-        local icon = devicon.get_icon_by_filetype(vim.bo.filetype, { default = true })
-        icon = ('%%#StatusLineIcon%s#%s%%#StatusLineFileName#'):format(vim.bo.filetype, icon)
+        local icon, color = devicon.get_icon_color_by_filetype(vim.bo.filetype, { default = true })
+        local hl_name = 'StatusLineIcon' .. vim.bo.filetype
+        if not vim.tbl_contains(G.cache, hl_name) then
+          local fine, hl = pcall(api.nvim_get_hl_by_name, 'StatusLineFileName', true)
+          if fine then
+            local hl_bg = hl.background and '#' .. bit.tohex(hl.background, 6)
+            api.nvim_set_hl(0, hl_name, { fg = color, bg = hl_bg })
+            table.insert(G.cache, hl_name)
+          end
+        end
+        icon = ('%%#%s#%s%%#StatusLineFileName#'):format(hl_name, icon)
         name = ('%s%s'):format(icon, (' %s '):format(name))
       end
 

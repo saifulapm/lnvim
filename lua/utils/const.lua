@@ -66,11 +66,13 @@ M.get_arrow = function()
 
   local types = { 'default', 'round', 'block', 'arrow' }
 
-  math.randomseed(os.time())
-  local ind = math.random(1, #types)
-  local name = types[ind]
+  if not G.arrow then
+    math.randomseed(os.time())
+    local ind = math.random(1, #types)
+    G.arrow = types[ind]
+  end
 
-  return arrows[name]
+  return arrows[G.arrow]
 end
 
 M.weekdays = {

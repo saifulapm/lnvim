@@ -38,7 +38,7 @@ return {
           local icons = require('lazyvim.config').icons.kinds
           local kind_hl_group = ('CmpItemKind%s'):format(item.kind)
           item.kind_hl_group = ('%sIcon'):format(kind_hl_group)
-          item.kind = (' %s '):format(string.gsub(icons[item.kind], '%s+', ''))
+          item.kind = (' %s '):format(icons[item.kind])
           item.menu_hl_group = source_hl[entry.source.name] or kind_hl_group
           item.menu = ({
             nvim_lsp = '[LSP]',

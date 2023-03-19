@@ -16,15 +16,6 @@ M.table_to_str = function(tb)
     local opts = ''
 
     for optName, optVal in pairs(hlgroup_vals) do
-      if type(optVal) == 'table' and optVal.icon then
-        local ok, devicon = pcall(require, 'nvim-web-devicons')
-        if ok then
-          local icon, color = devicon.get_icon_color_by_filetype(optVal.icon, { default = true })
-          optVal = 'NONE'
-          if color then optVal = color end
-        end
-      end
-
       local valueInStr = ((type(optVal)) == 'boolean' or type(optVal) == 'number') and tostring(optVal) or '"' .. optVal .. '"'
       opts = opts .. optName .. '=' .. valueInStr .. ','
     end
@@ -67,7 +58,6 @@ end
 M.load_highlights = function()
   local polish_hl = M.load_colors('polish_hl')
   local highlights = M.highlights()
-  local st_highlights = M.statusline_icons()
 
   -- polish themes
   if polish_hl then
@@ -85,7 +75,7 @@ M.load_highlights = function()
     end
   end
 
-  return vim.tbl_deep_extend('force', highlights, st_highlights)
+  return highlights
 end
 
 M.glassy_highlights = function()
@@ -475,6 +465,19 @@ M.highlights = function()
     gitcommitDiscardedFile = { fg = theme.base08, bold = true },
     gitcommitSelectedFile = { fg = theme.base0B, bold = true },
 
+    -- Git Sign
+    GitSignsAddNr = { fg = colors.green, bg = util.blend(colors.green, colors.grey, 0.10) },
+    GitSignsChangeNr = { fg = colors.light_grey, bg = util.blend(colors.light_grey, colors.grey, 0.10) },
+    GitSignsDeleteNr = { fg = colors.red, bg = util.blend(colors.red, colors.grey, 0.10) },
+    GitSignsAddLn = { bg = util.blend(colors.green, colors.grey, 0.05) },
+    GitSignsChangeLn = { bg = util.blend(colors.light_grey, colors.grey, 0.05) },
+    GitSignsDeleteLn = { bg = util.blend(colors.red, colors.grey, 0.05) },
+    GitSignsAddInline = { bg = util.blend(colors.green, colors.grey, 0.35) },
+    GitSignsChangeInline = { bg = util.blend(colors.light_grey, colors.grey, 0.35) },
+    GitSignsDeleteInline = { bg = util.blend(colors.red, colors.grey, 0.35) },
+    GitSignsAddPreview = { bg = util.blend(colors.green, colors.grey, 0.10) },
+    GitSignsDeletePreview = { bg = util.blend(colors.red, colors.grey, 0.10) },
+
     -- LSP References
     LspReferenceText = { fg = colors.darker_black, bg = colors.white },
     LspReferenceRead = { fg = colors.darker_black, bg = colors.white },
@@ -537,8 +540,8 @@ M.highlights = function()
 
     StatusLineArrowLeft = { fg = colors.lightbg, bg = colors.statusline_bg },
 
-    StatusLinePath = { bg = colors.one_bg3, fg = colors.red },
-    StatusLinePathSep = { bg = colors.one_bg3, fg = colors.nord_blue },
+    StatusLinePath = { bg = colors.one_bg3, fg = colors.cyan },
+    StatusLinePathSep = { bg = colors.one_bg3, fg = colors.orange },
     StatusLinePathArrow = { fg = colors.one_bg3, bg = colors.lightbg },
     StatusLineFileName = { bg = colors.lightbg, fg = colors.white },
     StatusLineFileArrow = { fg = colors.lightbg, bg = colors.statusline_bg },
@@ -599,17 +602,6 @@ M.highlights = function()
     NotifyTRACEIcon = { fg = colors.purple },
     NotifyTRACETitle = { fg = colors.purple },
   }
-end
-
-M.statusline_icons = function()
-  local colors = M.load_colors('base_30')
-  local file_types = { 'lua', 'Php', 'Js', 'vue', 'Jsx', 'html', 'Json' }
-  local hl = {}
-  for _, name in ipairs(file_types) do
-    hl['StatusLineIcon' .. name] = { fg = { icon = name }, bg = colors.lightbg }
-  end
-
-  return hl
 end
 
 M.setup = function()
