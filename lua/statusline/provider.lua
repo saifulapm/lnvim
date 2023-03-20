@@ -1,3 +1,4 @@
+local as = require('utils')
 local u = require('utils.const')
 local api, uv = vim.api, vim.loop
 local pd = {}
@@ -104,7 +105,7 @@ function pd.fileinfo()
           end
         end
         icon = ('%%#%s#%s%%#StatusLineFileName#'):format(hl_name, icon)
-        name = ('%s%s'):format(icon, (' %s '):format(name))
+        name = ('%s%s'):format(icon, (' %s'):format(name))
       end
 
       path = ('%s%s'):format(path, (' %s'):format(name))
@@ -163,9 +164,29 @@ function pd.lsp()
     end
 
     if #res == 0 then
-      local client = vim.lsp.get_active_clients({ bufnr = 0 })
-      if #client ~= 0 then table.insert(res, client[1].name) end
+      local clients = vim.lsp.get_active_clients({ bufnr = 0 })
+      table.sort(clients, function(a, b)
+        if a.name == 'null-ls' then
+          return false
+        elseif b.name == 'null-ls' then
+          return true
+        end
+        return a.name < b.name
+      end)
+      for _, client in ipairs(clients) do
+        local ok = pcall(require, 'null-ls')
+        if ok and client.name:match('null') then
+          local sources = require('null-ls.sources').get_available(vim.bo[0].filetype)
+          local source_names = vim.tbl_map(function(s) return s.name end, sources)
+          return table.insert(res, '␀ ' .. table.concat(source_names, ', '))
+        end
+
+        table.insert(res, client.name)
+      end
     end
+
+    if as.empty(res) then table.insert(res, 'לּ No LSP') end
+
     return '%.20{"' .. table.concat(res, '') .. '"}'
   end
 
@@ -175,7 +196,7 @@ function pd.lsp()
     event = { 'LspProgressUpdate', 'LspAttach' },
   }
 
-  return result
+  return lsp_stl()
 end
 
 local function gitsigns_data(type)

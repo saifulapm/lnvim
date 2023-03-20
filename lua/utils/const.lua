@@ -44,7 +44,7 @@ M.lspkind = {
 M.get_arrow = function()
   local arrows = {
     default = {
-      left = '',
+      left = '',
       right = ' ',
     },
 
