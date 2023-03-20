@@ -13,3 +13,17 @@ augroup('handle_large_file', function(autocmd)
     end
   end)
 end)
+
+augroup('macro_recording', function(autocmd)
+  local opts = { title = 'Macro', icon = '', timeout = 250 }
+
+  autocmd('RecordingEnter', '*', function()
+    local msg = (' 壘Recording @%s'):format(vim.fn.reg_recording())
+    vim.notify(msg, vim.log.levels.INFO, opts)
+  end)
+
+  autocmd('RecordingLeave', '*', function()
+    local msg = ('  Recorded @%s'):format(vim.v.event.regname)
+    vim.notify(msg, vim.log.levels.INFO, opts)
+  end)
+end)

@@ -23,4 +23,19 @@ M.empty = function(item)
   return item ~= nil
 end
 
+--- Remove duplicates from table
+---@param tbl table
+---@return table
+M.unique = function(tbl)
+  local seen = {}
+  local result = {}
+  for _, str in ipairs(tbl) do
+    if not seen[str] then
+      table.insert(result, str)
+      seen[str] = true
+    end
+  end
+  return result
+end
+
 return M

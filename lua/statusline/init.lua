@@ -1,9 +1,7 @@
 local co, api = coroutine, vim.api
 local whk = {}
 
-local function stl_format(name, val)
-  return '%#StatusLine' .. name .. '#' .. val .. '%*'
-end
+local function stl_format(name, val) return '%#StatusLine' .. name .. '#' .. val .. '%*' end
 
 local function default()
   local p = require('statusline.provider')
@@ -14,34 +12,23 @@ local function default()
     p.mode_sep,
     --
     p.fileinfo,
-    --
-    p.pad,
+    s.sep,
     p.diagError,
     p.diagWarn,
     p.diagInfo,
     p.diagHint,
-    p.pad,
     --
-    s.sep,
+    s.pad,
+    p.NoiceUpdates,
+    s.pad,
     --
-    s.sep,
     p.lsp,
-    s.sep,
     --
-    s.sep,
     p.gitadd,
     p.gitchange,
     p.gitdelete,
     p.branch,
     s.sep,
-    --
-    s.sep,
-    --
-    -- s.sep,
-    -- p.encoding,
-    -- s.sep,
-    --
-    s.arrow_left,
     p.lnumcol,
   }
 end
@@ -86,9 +73,7 @@ local stl_render = co.create(function(event)
       end
     end
 
-    vim.schedule(function()
-      vim.opt.stl = table.concat(pieces)
-    end)
+    vim.schedule(function() vim.opt.stl = table.concat(pieces) end)
     event = co.yield()
   end
 end)
@@ -99,18 +84,14 @@ function whk.setup()
   api.nvim_create_autocmd({ 'User' }, {
     pattern = { 'LspProgressUpdate', 'GitSignsUpdate' },
     callback = function(opt)
-      if opt.event == 'User' then
-        opt.event = opt.match
-      end
+      if opt.event == 'User' then opt.event = opt.match end
       co.resume(stl_render, opt.event)
     end,
   })
 
   local events = { 'DiagnosticChanged', 'ModeChanged', 'BufEnter', 'BufWritePost', 'LspAttach' }
   api.nvim_create_autocmd(events, {
-    callback = function(opt)
-      co.resume(stl_render, opt.event)
-    end,
+    callback = function(opt) co.resume(stl_render, opt.event) end,
   })
 end
 

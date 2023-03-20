@@ -538,8 +538,6 @@ M.highlights = function()
     StatusLineCommandSep = { fg = colors.dark_purple, bg = colors.one_bg3, bold = true },
     StatusLineTerminalSep = { fg = colors.dark_purple, bg = colors.one_bg3, bold = true },
 
-    StatusLineArrowLeft = { fg = colors.lightbg, bg = colors.statusline_bg },
-
     StatusLinePath = { bg = colors.one_bg3, fg = colors.cyan },
     StatusLinePathSep = { bg = colors.one_bg3, fg = colors.orange },
     StatusLinePathArrow = { fg = colors.one_bg3, bg = colors.lightbg },
@@ -548,42 +546,18 @@ M.highlights = function()
     StatusLineLineCol = { bg = colors.lightbg, fg = colors.green },
     StatusLineLines = { bg = colors.one_bg3, fg = colors.white, bold = true },
     StatusLineLinesArrow = { fg = colors.one_bg3, bg = colors.lightbg, bold = true },
-
+    StatusLineColArrow = { fg = colors.lightbg, bg = colors.statusline_bg },
     StatusLineEmptySpace = { fg = colors.grey, bg = colors.statusline_bg },
-    StatusLineEmptySpace2 = {
-      fg = colors.grey,
-      bg = colors.lightbg,
-    },
-
-    -- St_cwd_icon = {
-    --   fg = colors.one_bg,
-    --   bg = colors.red,
-    -- },
-
-    -- St_cwd_text = {
-    --   fg = colors.white,
-    --   bg = colors.lightbg,
-    -- },
-
-    -- St_cwd_sep = {
-    --   fg = colors.red,
-    --   bg = colors.statusline_bg,
-    -- },
-
-    -- St_pos_sep = {
-    --   fg = colors.green,
-    --   bg = colors.lightbg,
-    -- },
-
-    -- St_pos_icon = {
-    --   fg = colors.black,
-    --   bg = colors.green,
-    -- },
-
-    -- St_pos_text = {
-    --   fg = colors.green,
-    --   bg = colors.lightbg,
-    -- },
+    StatusLineLsp = { fg = colors.nord_blue, bg = colors.statusline_bg },
+    StatusLineGitBranch = { fg = colors.light_grey, bg = colors.statusline_bg, bold = true },
+    StatusLineGitAdd = { fg = colors.green, bg = colors.statusline_bg },
+    StatusLineGitChange = { fg = colors.light_grey, bg = colors.statusline_bg },
+    StatusLineGitDelete = { fg = colors.red, bg = colors.statusline_bg },
+    StatusLineDiagError = { fg = colors.red, bg = colors.statusline_bg },
+    StatusLineDiagWarn = { fg = colors.yellow, bg = colors.statusline_bg },
+    StatusLineDiagHint = { fg = colors.purple, bg = colors.statusline_bg },
+    StatusLineDiagInfo = { fg = colors.green, bg = colors.statusline_bg },
+    StatusLineNoice = { link = 'Statement' },
 
     -- Notify
     NotifyERRORBorder = { fg = colors.red },

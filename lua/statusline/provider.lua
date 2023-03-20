@@ -108,7 +108,7 @@ function pd.fileinfo()
         name = ('%s%s'):format(icon, (' %s'):format(name))
       end
 
-      path = ('%s%s'):format(path, (' %s'):format(name))
+      path = ('%s%s%%m'):format(path, (' %s'):format(name))
     end
 
     path = ('%s%%#StatusLineFileArrow#%s'):format(path, arrow.right)
@@ -159,7 +159,7 @@ function pd.lsp()
     local spinner = { '🌖', '🌗', '🌘', '🌑', '🌒', '🌓', '🌔' }
 
     if not vim.tbl_isempty(new_messages) then
-      table.insert(res, spinner[index] .. ' Waiting')
+      table.insert(res, spinner[index])
       index = index + 1 > #spinner and 1 or index + 1
     end
 
@@ -173,21 +173,19 @@ function pd.lsp()
         end
         return a.name < b.name
       end)
-      for _, client in ipairs(clients) do
-        local ok = pcall(require, 'null-ls')
+      for _, client in pairs(clients) do
+        local ok, null = pcall(require, 'null-ls.sources')
         if ok and client.name:match('null') then
-          local sources = require('null-ls.sources').get_available(vim.bo[0].filetype)
+          local sources = null.get_available(vim.bo[0].filetype)
           local source_names = vim.tbl_map(function(s) return s.name end, sources)
-          return table.insert(res, '␀ ' .. table.concat(source_names, ', '))
+          table.insert(res, '␀ ' .. table.concat(source_names, ', '))
+        else
+          table.insert(res, client.name)
         end
-
-        table.insert(res, client.name)
       end
     end
 
-    if as.empty(res) then table.insert(res, 'לּ No LSP') end
-
-    return '%.20{"' .. table.concat(res, '') .. '"}'
+    return '[%.20{"' .. table.concat(as.unique(res), ', ') .. '"}]'
   end
 
   local result = {
@@ -196,7 +194,7 @@ function pd.lsp()
     event = { 'LspProgressUpdate', 'LspAttach' },
   }
 
-  return lsp_stl()
+  return result
 end
 
 local function gitsigns_data(type)
@@ -204,15 +202,15 @@ local function gitsigns_data(type)
   if not vim.b.gitsigns_status_dict then return '' end
 
   local val = vim.b.gitsigns_status_dict[type]
-  val = (val == 0 or not val) and '' or tostring(val) .. (type == 'head' and '' or ' ')
+  val = (val == 0 or not val) and '' or tostring(val)
   return val
 end
 
 local function git_icons(type)
   local tbl = {
-    ['added'] = ' ',
-    ['changed'] = ' ',
-    ['deleted'] = ' ',
+    ['added'] = '  ',
+    ['changed'] = '  ',
+    ['deleted'] = '  ',
   }
   return tbl[type]
 end
@@ -223,7 +221,7 @@ function pd.gitadd()
       local res = gitsigns_data('added')
       return #res > 0 and git_icons('added') .. res or ''
     end,
-    name = 'gitadd',
+    name = 'GitAdd',
     event = { 'GitSignsUpdate' },
   }
   return result
@@ -235,7 +233,7 @@ function pd.gitchange()
       local res = gitsigns_data('changed')
       return #res > 0 and git_icons('changed') .. res or ''
     end,
-    name = 'gitchange',
+    name = 'GitChange',
     event = { 'GitSignsUpdate' },
   }
 
@@ -248,7 +246,7 @@ function pd.gitdelete()
       local res = gitsigns_data('deleted')
       return #res > 0 and git_icons('deleted') .. res or ''
     end,
-    name = 'gitdelete',
+    name = 'GitDelete',
     event = { 'GitSignsUpdate' },
   }
 
@@ -258,31 +256,19 @@ end
 function pd.branch()
   local result = {
     stl = function()
-      local icon = ' '
+      local icon = ''
       local res = gitsigns_data('head')
-      return #res > 0 and icon .. res or 'UNKOWN'
+      return #res > 0 and (' %s %s'):format(icon, res) or ''
     end,
-    name = 'gitbranch',
+    name = 'GitBranch',
     event = { 'GitSignsUpdate' },
   }
   return result
 end
 
-function pd.pad()
-  return {
-    stl = '%=',
-    name = 'pad',
-    attr = {
-      background = 'NONE',
-      foreground = 'NONE',
-    },
-  }
-end
-
 function pd.lnumcol()
-  -- local sep = path_sep()
   local sep = ('%%#StatusLineLinesArrow#%s%%#StatusLineLines#'):format(arrow.left)
-  local stl = ('%%-4.(%%l:%%c%%) %s %%L '):format(sep)
+  local stl = ('%%#StatusLineColArrow#%s%%#StatusLineLineCol#%%-4.(%%l:%%c%%) %s%%L '):format(arrow.left, sep)
   local result = {
     stl = stl,
     name = 'LineCol',
@@ -296,10 +282,10 @@ local function diagnostic_info(severity)
   if vim.diagnostic.is_disabled(0) then return '' end
 
   local signs = {
-    ' ',
-    ' ',
-    ' ',
-    ' ',
+    ' ',
+    ' ',
+    ' ',
+    ' ',
   }
   local count = #vim.diagnostic.get(0, { severity = severity })
   return count == 0 and '' or signs[severity] .. tostring(count) .. ' '
@@ -308,7 +294,7 @@ end
 function pd.diagError()
   local result = {
     stl = function() return diagnostic_info(1) end,
-    name = 'diagError',
+    name = 'DiagError',
     event = { 'DiagnosticChanged' },
   }
   return result
@@ -317,8 +303,8 @@ end
 function pd.diagWarn()
   local result = {
     stl = function() return diagnostic_info(2) end,
-    name = 'diagWarn',
-    event = { 'DiagnosticChanged', 'BufEnter' },
+    name = 'DiagWarn',
+    event = { 'DiagnosticChanged' },
   }
   return result
 end
@@ -326,8 +312,8 @@ end
 function pd.diagInfo()
   local result = {
     stl = function() return diagnostic_info(3) end,
-    name = 'diaginfo',
-    event = { 'DiagnosticChanged', 'BufEnter' },
+    name = 'DiagInfo',
+    event = { 'DiagnosticChanged' },
   }
   return result
 end
@@ -335,16 +321,17 @@ end
 function pd.diagHint()
   local result = {
     stl = function() return diagnostic_info(4) end,
-    name = 'diaghint',
-    event = { 'DiagnosticChanged', 'BufEnter' },
+    name = 'DiagHint',
+    event = { 'DiagnosticChanged' },
   }
   return result
 end
 
-function pd.encoding()
+function pd.NoiceUpdates()
+  local function get_noice() return package.loaded['noice'] and require('lazy.status').has_updates and require('lazy.status').updates() or '' end
   local result = {
-    stl = '%{&fileencoding?&fileencoding:&encoding}',
-    name = 'filencode',
+    stl = get_noice,
+    name = 'Noice',
     event = { 'BufEnter' },
   }
   return result

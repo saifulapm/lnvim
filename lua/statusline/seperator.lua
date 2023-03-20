@@ -1,6 +1,4 @@
-local u = require('utils.const')
 local sp = {}
-local arrow = u.get_arrow()
 
 function sp.sep()
   return {
@@ -9,17 +7,14 @@ function sp.sep()
   }
 end
 
-function sp.arrow_right()
+function sp.pad()
   return {
-    stl = arrow.right,
-    name = 'ArrowRight',
-  }
-end
-
-function sp.arrow_left()
-  return {
-    stl = arrow.left,
-    name = 'ArrowLeft',
+    stl = '%=',
+    name = 'pad',
+    attr = {
+      background = 'NONE',
+      foreground = 'NONE',
+    },
   }
 end
 
