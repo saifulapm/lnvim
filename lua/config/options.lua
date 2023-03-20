@@ -16,6 +16,20 @@ set.wrap = false -- disable line wrap
 set.softtabstop = -1 -- number of spaces that a <Tab> counts for while performing editing operations, negative means use 'shiftwidth' value
 set.laststatus = 3
 
+set.complete:remove({ -- disable scan for
+  'u', -- unload buffers
+  't', -- tag completion
+})
+set.completeopt:append({
+  'menuone', -- use the popup menu also when there is only one match
+  'noinsert', -- do not insert any text for a match until the user selects a match from the menu
+  'noselect', -- do not selecr a match in the menu, forece the user to select one from the menu
+})
+
 set.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
 set.foldlevelstart = 99
 set.foldenable = true
+set.breakindent = true -- continue indenting wrapped lines
+set.pumblend = 10 -- pseudo-transparency for the popup-menu, value : 0 - 100
+set.shiftwidth = 0 -- number of spaces to use for each step of (auto)indent, 0 means use 'tabstop' value
+set.showtabline = 1 -- show tab-page only if there are at least 2 tab pages

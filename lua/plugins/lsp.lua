@@ -63,7 +63,7 @@ return {
   {
     'jose-elias-alvarez/null-ls.nvim',
     opts = function()
-      local nls = require("null-ls").builtins
+      local nls = require('null-ls').builtins
       return {
         root_dir = require('null-ls.utils').root_pattern('.null-ls-root', '.neoconf.json', 'Makefile', '.git'),
         sources = {
@@ -91,6 +91,24 @@ return {
         'prettierd',
         'php-cs-fixer',
         'pint',
+      },
+    },
+  },
+  {
+    'akinsho/flutter-tools.nvim',
+    opts = {
+      outline = { auto_open = false },
+      widget_guides = { enabled = true, debug = false },
+      dev_log = { enabled = false, open_cmd = 'tabedit' },
+      lsp = {
+        color = { enabled = true, background = true, virtual_text = false },
+        settings = {
+          showTodos = false,
+          renameFilesWithClasses = 'prompt',
+          updateImportsOnRename = true,
+          completeFunctionCalls = true,
+          lineLength = 100,
+        },
       },
     },
   },
