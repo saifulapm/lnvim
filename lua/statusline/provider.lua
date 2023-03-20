@@ -185,7 +185,7 @@ function pd.lsp()
       end
     end
 
-    return '[%.20{"' .. table.concat(as.unique(res), ', ') .. '"}]'
+    return '[' .. table.concat(as.unique(res), ', ') .. ']'
   end
 
   local result = {
