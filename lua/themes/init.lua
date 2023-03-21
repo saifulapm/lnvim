@@ -575,6 +575,32 @@ M.highlights = function()
     NotifyTRACEBorder = { fg = colors.purple },
     NotifyTRACEIcon = { fg = colors.purple },
     NotifyTRACETitle = { fg = colors.purple },
+
+    -- ts-rainbow2 (maintained fork)
+    TSRainbowRed = { fg = colors.red },
+    TSRainbowOrange = { fg = colors.orange },
+    TSRainbowYellow = { fg = colors.yellow },
+    TSRainbowGreen = { fg = colors.green },
+    TSRainbowBlue = { fg = colors.blue },
+    TSRainbowViolet = { fg = colors.purple },
+    TSRainbowCyan = { fg = colors.cyan },
+
+    -- LspTrouble
+    TroubleNormal = { bg = colors.darker_black },
+
+    -- Illuminate
+    illuminatedWord = { bg = colors.one_bg2 },
+    illuminatedCurWord = { bg = colors.one_bg2 },
+    IlluminatedWordText = { bg = colors.one_bg2 },
+    IlluminatedWordRead = { bg = colors.one_bg2 },
+    IlluminatedWordWrite = { bg = colors.one_bg2 },
+
+    -- WhichKey
+    WhichKey = { fg = colors.blue },
+    WhichKeySeparator = { fg = colors.light_grey },
+    WhichKeyDesc = { fg = colors.red },
+    WhichKeyGroup = { fg = colors.green },
+    WhichKeyValue = { fg = colors.green },
   }
 end
 

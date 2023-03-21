@@ -92,4 +92,16 @@ return {
       numhl = true,
     },
   },
+  {
+    'numToStr/FTerm.nvim',
+    opts = { hl = 'NormalFloat', dimensions = { height = 0.4, width = 0.9 } },
+    keys = {
+      { '<A-t>', function() require('FTerm').toggle() end, desc = 'Toggle Terminal' },
+      { '<A-t>', function() require('FTerm').toggle() end, desc = 'Toggle Terminal', mode = 't' },
+    },
+  },
+  {
+    'RRethy/vim-illuminate',
+    opts = { delay = 200, large_file_cutoff = 5000 },
+  },
 }

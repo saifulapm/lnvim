@@ -1,0 +1,10 @@
+{
+  "contributes": {
+    "snippets": [
+      {
+        "language": "liquid",
+        "path": "./liquid.json"
+      }
+    ]
+  }
+}
