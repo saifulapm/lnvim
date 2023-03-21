@@ -222,7 +222,7 @@ function pd.gitadd()
       return #res > 0 and git_icons('added') .. res or ''
     end,
     name = 'GitAdd',
-    event = { 'GitSignsUpdate' },
+    event = { 'GitSignsUpdate', 'BufEnter' },
   }
   return result
 end
@@ -234,7 +234,7 @@ function pd.gitchange()
       return #res > 0 and git_icons('changed') .. res or ''
     end,
     name = 'GitChange',
-    event = { 'GitSignsUpdate' },
+    event = { 'GitSignsUpdate', 'BufEnter' },
   }
 
   return result
@@ -247,7 +247,7 @@ function pd.gitdelete()
       return #res > 0 and git_icons('deleted') .. res or ''
     end,
     name = 'GitDelete',
-    event = { 'GitSignsUpdate' },
+    event = { 'GitSignsUpdate', 'BufEnter' },
   }
 
   return result
@@ -295,7 +295,7 @@ function pd.diagError()
   local result = {
     stl = function() return diagnostic_info(1) end,
     name = 'DiagError',
-    event = { 'DiagnosticChanged' },
+    event = { 'DiagnosticChanged', 'BufEnter' },
   }
   return result
 end
@@ -304,7 +304,7 @@ function pd.diagWarn()
   local result = {
     stl = function() return diagnostic_info(2) end,
     name = 'DiagWarn',
-    event = { 'DiagnosticChanged' },
+    event = { 'DiagnosticChanged', 'BufEnter' },
   }
   return result
 end
@@ -313,7 +313,7 @@ function pd.diagInfo()
   local result = {
     stl = function() return diagnostic_info(3) end,
     name = 'DiagInfo',
-    event = { 'DiagnosticChanged' },
+    event = { 'DiagnosticChanged', 'BufEnter' },
   }
   return result
 end
@@ -322,7 +322,7 @@ function pd.diagHint()
   local result = {
     stl = function() return diagnostic_info(4) end,
     name = 'DiagHint',
-    event = { 'DiagnosticChanged' },
+    event = { 'DiagnosticChanged', 'BufEnter' },
   }
   return result
 end
