@@ -95,6 +95,17 @@ return {
     },
   },
   {
+    'lvimuser/lsp-inlayhints.nvim',
+    opts = {
+      inlay_hints = {
+        highlight = 'Comment',
+        labels_separator = ' ⏐ ',
+        parameter_hints = { prefix = '' },
+        type_hints = { prefix = '=> ', remove_colon_start = true },
+      },
+    },
+  },
+  {
     'akinsho/flutter-tools.nvim',
     opts = {
       outline = { auto_open = false },

@@ -104,4 +104,28 @@ return {
     'RRethy/vim-illuminate',
     opts = { delay = 200, large_file_cutoff = 5000 },
   },
+  {
+    'cbochs/portal.nvim',
+    cmd = { 'Portal' },
+    keys = {
+      { '<leader>jb', '<cmd>Portal jumplist backward<cr>', desc = 'jump: backwards' },
+      { '<leader>jf', '<cmd>Portal jumplist forward<cr>', desc = 'jump: forwards' },
+    },
+    opts = {
+      filter = function(v)
+        if v.buffer == vim.api.nvim_get_current_buf() then return false end
+        return vim.startswith(vim.api.nvim_buf_get_name(v.buffer), vim.fn.getcwd())
+      end,
+    },
+  },
+  { 'AndrewRadev/linediff.vim', cmd = 'Linediff' },
+  {
+    url = 'https://gitlab.com/yorickpeterse/nvim-pqf',
+    event = 'VeryLazy',
+    config = true,
+  },
+  {
+    'kevinhwang91/nvim-bqf',
+    ft = 'qf',
+  },
 }

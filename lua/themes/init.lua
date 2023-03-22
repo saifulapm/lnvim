@@ -601,6 +601,15 @@ M.highlights = function()
     WhichKeyDesc = { fg = colors.red },
     WhichKeyGroup = { fg = colors.green },
     WhichKeyValue = { fg = colors.green },
+
+    -- Quickfix
+    qfPosition = { link = 'String' },
+    BqfPreviewBorder = { link = 'Comment' },
+
+    -- Portal
+    PortalNormal = { link = 'Normal' },
+    PortalBorder = { link = 'Label' },
+    PortalTitle = { link = 'Label' },
   }
 end
 
