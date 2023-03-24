@@ -40,7 +40,7 @@ return {
         enable_autocmd = false,
       },
       indent = {
-        enable = false,
+        enable = true,
         disable = function(lang, bufnr) return lang == 'python' or ts_disable(bufnr) end,
       },
       rainbow = {
