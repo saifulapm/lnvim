@@ -131,6 +131,8 @@ local function path_sep() return uv.os_uname().sysname == 'Windows_NT' and '\\' 
 
 function pd.fileinfo()
   local function stl_path()
+    if vim.bo.filetype == 'neo-tree' then return ('%%#StatusLinePath#%s'):format(' File Manager ') end
+
     local i = 1
     local trunc = 2
     local path = vim.fn.expand('%:.:h')
