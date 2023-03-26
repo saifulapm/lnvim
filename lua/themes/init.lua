@@ -153,7 +153,7 @@ M.highlights = function()
     LineNr = { fg = colors.grey },
 
     -- floating windows
-    FloatBorder = { fg = colors.blue },
+    FloatBorder = { fg = colors.darker_black, bg = colors.darker_black },
     NormalFloat = { bg = colors.darker_black },
     NvimInternalError = { fg = colors.red },
     WinSeparator = { fg = colors.line },

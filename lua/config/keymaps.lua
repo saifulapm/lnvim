@@ -64,3 +64,15 @@ vim.keymap.set('x', 'p', 'pgv')
 vim.keymap.set('n', 'gZ', function() require('utils.zen').enter() end)
 
 vim.keymap.set('n', 'gzz', function() require('utils.zen').toggle({ laststatus = true }) end)
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+--  Laravel Specific Keymaps
+------------------------------------------------------------------------------------------------------------------------------------------------------
+if vim.fn.glob('artisan') ~= '' then
+  local tinker = require('FTerm'):new({
+    cmd = 'php artisan tinker',
+  })
+  vim.keymap.set('n', '<Leader>Ll', ':e storage/logs/laravel.log<CR>', { desc = 'Laravel Log' })
+  vim.keymap.set('n', '<Leader>Le', ':e .env<CR>', { desc = 'Laravel Env' })
+  vim.keymap.set('n', '<Leader>Lt', function() tinker:toggle() end, { desc = 'Laravel Tinker' })
+end
