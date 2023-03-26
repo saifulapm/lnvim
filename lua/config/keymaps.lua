@@ -73,7 +73,8 @@ if vim.fn.glob('artisan') ~= '' then
     cmd = 'php artisan tinker',
     hl = 'NormalFloat',
   })
-  vim.keymap.set('n', '<Leader>Ll', ':e storage/logs/laravel.log<CR>', { desc = 'Laravel Log' })
-  vim.keymap.set('n', '<Leader>Le', ':e .env<CR>', { desc = 'Laravel Env' })
-  vim.keymap.set('n', '<Leader>Lt', function() tinker:toggle() end, { desc = 'Laravel Tinker' })
+  vim.keymap.set('n', '<LocalLeader>ll', ':e storage/logs/laravel.log<CR>', { desc = 'Laravel Log' })
+  vim.keymap.set('n', '<LocalLeader>lt', function() tinker:toggle() end, { desc = 'Laravel Tinker' })
 end
+
+if vim.fn.glob('.env') ~= '' then vim.keymap.set('n', '<LocalLeader>le', ':e .env<CR>', { desc = 'Edit Env' }) end
