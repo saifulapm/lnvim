@@ -71,6 +71,7 @@ vim.keymap.set('n', 'gzz', function() require('utils.zen').toggle({ laststatus =
 if vim.fn.glob('artisan') ~= '' then
   local tinker = require('FTerm'):new({
     cmd = 'php artisan tinker',
+    hl = 'NormalFloat',
   })
   vim.keymap.set('n', '<Leader>Ll', ':e storage/logs/laravel.log<CR>', { desc = 'Laravel Log' })
   vim.keymap.set('n', '<Leader>Le', ':e .env<CR>', { desc = 'Laravel Env' })
