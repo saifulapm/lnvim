@@ -107,6 +107,8 @@ return {
   },
   {
     'akinsho/flutter-tools.nvim',
+    ft = 'dart',
+    event = 'BufRead pubspec.yaml',
     opts = {
       outline = { auto_open = false },
       widget_guides = { enabled = true, debug = false },
@@ -122,5 +124,18 @@ return {
         },
       },
     },
+    config = function(_, opts)
+      require('flutter-tools').setup(opts)
+      local ok, telescope = pcall(require, 'telescope')
+      if ok and telescope.load_extension then
+        telescope.load_extension('flutter')
+        vim.keymap.set(
+          { 'n' },
+          '<LocalLeader>fl',
+          function() telescope.extensions.flutter.commands() end,
+          { silent = true, buffer = true, desc = 'Flutter Tools' }
+        )
+      end
+    end,
   },
 }
