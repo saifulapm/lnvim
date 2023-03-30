@@ -86,13 +86,6 @@ return {
     },
   },
   {
-    'lewis6991/gitsigns.nvim',
-    opts = {
-      signcolumn = false,
-      numhl = true,
-    },
-  },
-  {
     'numToStr/FTerm.nvim',
     opts = { hl = 'NormalFloat', dimensions = { height = 0.4, width = 0.9 } },
     keys = {
@@ -135,5 +128,26 @@ return {
   {
     'kevinhwang91/nvim-bqf',
     ft = 'qf',
+  },
+  {
+    'ThePrimeagen/harpoon',
+    opts = {
+      mark_branch = true,
+    },
+    keys = {
+      { '<localleader>a', function() require('harpoon.mark').add_file() end, desc = 'Harpoon Add' },
+      { '<localleader>f', function() require('harpoon.ui').toggle_quick_menu() end, desc = 'Harpoon Finder' },
+      { '<localleader>b', function() require('harpoon.ui').nav_prev() end, desc = 'Harpoon Prev' },
+      { '<localleader>n', function() require('harpoon.ui').nav_next() end, desc = 'Harpoon Next' },
+      { '<localleader>1', function() require('harpoon.ui').nav_file(1) end, desc = 'Harpoon Goto 1' },
+      { '<localleader>2', function() require('harpoon.ui').nav_file(2) end, desc = 'Harpoon Goto 2' },
+      { '<localleader>3', function() require('harpoon.ui').nav_file(3) end, desc = 'Harpoon Goto 3' },
+      { '<localleader>4', function() require('harpoon.ui').nav_file(4) end, desc = 'Harpoon Goto 4' },
+      { '<localleader>5', function() require('harpoon.ui').nav_file(5) end, desc = 'Harpoon Goto 5' },
+      { '<localleader>6', function() require('harpoon.ui').nav_file(6) end, desc = 'Harpoon Goto 6' },
+      { '<localleader>7', function() require('harpoon.ui').nav_file(7) end, desc = 'Harpoon Goto 7' },
+      { '<localleader>8', function() require('harpoon.ui').nav_file(8) end, desc = 'Harpoon Goto 8' },
+      { '<localleader>9', function() require('harpoon.ui').nav_file(9) end, desc = 'Harpoon Goto 9' },
+    },
   },
 }

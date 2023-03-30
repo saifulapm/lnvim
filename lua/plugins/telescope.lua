@@ -1,6 +1,15 @@
 return {
   {
     'nvim-telescope/telescope.nvim',
+    dependencies = {
+      { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+      { 'benfowler/telescope-luasnip.nvim' },
+      {
+        'danielfalk/smart-open.nvim',
+        branch = '0.2.x',
+        dependencies = { 'kkharji/sqlite.lua' },
+      },
+    },
     opts = {
       defaults = {
         borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
@@ -67,6 +76,41 @@ return {
           previewer = false,
         },
       },
+      extensions = {
+        fzf = {
+          case_mode = 'ignore_case',
+        },
+        smart_open = {
+          max_unindexed = 1000,
+          match_algorithm = 'fzf',
+          ignore_patterns = { '*.git/*', '*/tmp/*', '*/node_modules/*', '*/vendor/*' },
+        },
+      },
     },
+    keys = {
+      {
+        '<leader><space>',
+        function() require('telescope').extensions.smart_open.smart_open({ cwd_only = true }) end,
+        desc = 'Find Files (smart_open)',
+      },
+      {
+        '<leader>sl',
+        function() require('telescope').extensions.luasnip.luasnip(require('telescope.themes').get_dropdown({ previewer = false })) end,
+        desc = 'luasnip: available snippets',
+      },
+    },
+    config = function(_, opts)
+      local telescope = require('telescope')
+      telescope.setup(opts)
+      local extensions_list = {
+        'luasnip',
+        'smart_open',
+        'fzf',
+      }
+
+      for _, extension in ipairs(extensions_list) do
+        telescope.load_extension(extension)
+      end
+    end,
   },
 }

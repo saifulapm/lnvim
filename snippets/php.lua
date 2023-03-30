@@ -1,4 +1,5 @@
 ---@diagnostic disable: undefined-global
+local function capitalized(args) return (args[1][1]:gsub('^%l', string.upper)) end
 
 return {
   s(
@@ -37,6 +38,52 @@ return {
         c(3, { t('index'), t('__invoke') }),
         i(4),
         i(0),
+      }
+    )
+  ),
+
+  ------------------------------------------------------------------------------------------------------------------------------------------------------
+  --  Some more
+  ------------------------------------------------------------------------------------------------------------------------------------------------------
+  -- Setter
+  s(
+    'set',
+    fmt(
+      [[
+public function set{}({} ${}): void {{
+	$this->{} = ${};
+}}
+]],
+      {
+        f(capitalized, { 1 }),
+        i(2),
+        rep(1),
+        i(1),
+        rep(1),
+      }
+    )
+  ),
+  -- Getter and setter
+  s(
+    'getset',
+    fmt(
+      [[
+public function get{}(): {} {{
+	return $this->{};
+}}
+public function set{}({} ${}): void {{
+	$this->{} = ${};
+}}
+]],
+      {
+        f(capitalized, { 1 }),
+        i(2),
+        i(1),
+        f(capitalized, { 1 }),
+        rep(2),
+        rep(1),
+        rep(1),
+        rep(1),
       }
     )
   ),
