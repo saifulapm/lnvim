@@ -104,20 +104,7 @@ return {
       { '<leader>jb', '<cmd>Portal jumplist backward<cr>', desc = 'jump: backwards' },
       { '<leader>jf', '<cmd>Portal jumplist forward<cr>', desc = 'jump: forwards' },
     },
-    config = function()
-      local function different_portals()
-        local found = {}
-        return function(content)
-          local buf = content.buffer
-          if buf == vim.api.nvim_get_current_buf() then return false end
-          if not vim.startswith(vim.api.nvim_buf_get_name(buf), vim.fn.getcwd()) then return false end
-          if vim.tbl_contains(found, buf) then return false end
-          table.insert(found, buf)
-          return true
-        end
-      end
-      require('portal').setup({ filter = different_portals() })
-    end,
+    config = true,
   },
   { 'AndrewRadev/linediff.vim', cmd = 'Linediff' },
   {

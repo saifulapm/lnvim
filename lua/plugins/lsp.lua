@@ -18,9 +18,16 @@ return {
   -- lspconfig
   {
     'neovim/nvim-lspconfig',
+    init = function()
+      local keys = require('lazyvim.plugins.lsp.keymaps').get()
+      -- disable a keymap
+      keys[#keys + 1] = { 'gD', false }
+      keys[#keys + 1] = { 'gt', false }
+      keys[#keys + 1] = { 'gy', '<cmd>Telescope lsp_type_definitions<cr>', desc = 'Goto Type Definition' }
+    end,
     opts = {
       diagnostics = {
-        underline = true,
+        underline = false,
         virtual_text = false,
         float = {
           format = function(diagnostic) return trim(diagnostic.message) end,
@@ -137,5 +144,18 @@ return {
         )
       end
     end,
+  },
+  {
+    'DNLHC/glance.nvim',
+    opts = {
+      preview_win_opts = { relativenumber = false },
+      theme = { enable = true, mode = 'darken' },
+    },
+    keys = {
+      { 'gD', '<Cmd>Glance definitions<CR>', desc = 'lsp: glance definitions' },
+      { 'gR', '<Cmd>Glance references<CR>', desc = 'lsp: glance references' },
+      { 'gY', '<Cmd>Glance type_definitions<CR>', desc = 'lsp: glance type definitions' },
+      { 'gM', '<Cmd>Glance implementations<CR>', desc = 'lsp: glance implementations' },
+    },
   },
 }
