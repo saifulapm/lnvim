@@ -179,9 +179,12 @@ return {
       require('luasnip.loaders.from_lua').lazy_load({ paths = './snippets' })
       require('luasnip.loaders.from_vscode').lazy_load({ paths = './snippets' })
       luasnip.filetype_extend('dart', { 'flutter' })
-      luasnip.filetype_extend('html', { 'svelte' })
-      luasnip.filetype_extend('javascript', { 'svelte-script', 'typescript', 'typescriptreact', 'javascriptreact' })
-      luasnip.filetype_extend('css', { 'svelte-style' })
+      luasnip.filetype_extend('svelte', { 'html' })
+      luasnip.filetype_extend('svelte-script', { 'javascript' })
+      luasnip.filetype_extend('javascriptreact', { 'javascript' })
+      luasnip.filetype_extend('typescript', { 'javascript' })
+      luasnip.filetype_extend('typescriptreact', { 'javascript' })
+      luasnip.filetype_extend('svelte-style', { 'css' })
       -- For Shopify Json Schema
       luasnip.filetype_extend('json', { 'liquid' })
     end,
