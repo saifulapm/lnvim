@@ -27,7 +27,7 @@ return {
     end,
     opts = {
       diagnostics = {
-        underline = false,
+        underline = true,
         virtual_text = false,
         float = {
           format = function(diagnostic) return trim(diagnostic.message) end,
@@ -41,6 +41,7 @@ return {
           end,
         },
       },
+      autoformat = true,
       servers = {
         intelephense = {
           settings = {
@@ -55,12 +56,52 @@ return {
         svelte = {},
         cssls = {},
         rust_analyzer = {},
-        tailwindcss = {},
-        eslint = {
+        tailwindcss = {
+          root_dir = require('lspconfig.util').root_pattern('tailwind.config.js', 'tailwind.config.ts'),
+        },
+        tsserver = {
+          init_options = {
+            hostInfo = 'neovim',
+            preferences = {
+              quotePreference = 'double',
+              includeCompletionsWithSnippetText = true,
+              generateReturnInDocTemplate = true,
+              includeInlayParameterNameHints = 'all',
+              includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+              includeInlayFunctionParameterTypeHints = true,
+              includeInlayVariableTypeHints = true,
+              includeInlayPropertyDeclarationTypeHints = true,
+              includeInlayFunctionLikeReturnTypeHints = true,
+              includeInlayEnumMemberValueHints = true,
+            },
+          },
           settings = {
             format = false,
-            -- helps eslint find the eslintrc when it's placed in a subfolder instead of the cwd root
+          },
+        },
+        eslint = {
+          root_dir = require('lspconfig.util').root_pattern(
+            '.eslintrc',
+            '.eslintrc.js',
+            '.eslintrc.cjs',
+            '.eslintrc.yaml',
+            '.eslintrc.yml',
+            '.eslintrc.json'
+          ),
+          settings = {
+            format = {
+              enable = false,
+            },
             workingDirectory = { mode = 'auto' },
+          },
+          handlers = {
+            -- this error shows up occasionally when formatting
+            -- formatting actually works, so this will supress it
+            ['window/showMessageRequest'] = function(_, result)
+              if result.message:find('ENOENT') then return vim.NIL end
+
+              return vim.lsp.handlers['window/showMessageRequest'](nil, result)
+            end,
           },
         },
         volar = {},
@@ -74,7 +115,7 @@ return {
       return {
         root_dir = require('null-ls.utils').root_pattern('.null-ls-root', '.neoconf.json', 'Makefile', '.git'),
         sources = {
-          nls.formatting.prettierd.with({
+          nls.formatting.prettier.with({
             extra_filetypes = { 'svelte', 'liquid' },
           }),
           nls.formatting.phpcsfixer.with({
@@ -95,20 +136,9 @@ return {
     opts = {
       ensure_installed = {
         'stylua',
-        'prettierd',
+        'prettier',
         'php-cs-fixer',
         'pint',
-      },
-    },
-  },
-  {
-    'lvimuser/lsp-inlayhints.nvim',
-    opts = {
-      inlay_hints = {
-        highlight = 'Comment',
-        labels_separator = ' ⏐ ',
-        parameter_hints = { prefix = '' },
-        type_hints = { prefix = '=> ', remove_colon_start = true },
       },
     },
   },
@@ -144,18 +174,5 @@ return {
         )
       end
     end,
-  },
-  {
-    'DNLHC/glance.nvim',
-    opts = {
-      preview_win_opts = { relativenumber = false },
-      theme = { enable = true, mode = 'darken' },
-    },
-    keys = {
-      { 'gD', '<Cmd>Glance definitions<CR>', desc = 'lsp: glance definitions' },
-      { 'gR', '<Cmd>Glance references<CR>', desc = 'lsp: glance references' },
-      { 'gY', '<Cmd>Glance type_definitions<CR>', desc = 'lsp: glance type definitions' },
-      { 'gM', '<Cmd>Glance implementations<CR>', desc = 'lsp: glance implementations' },
-    },
   },
 }

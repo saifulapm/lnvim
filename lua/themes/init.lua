@@ -71,7 +71,7 @@ M.load_highlights = function()
     local glassy = M.glassy_highlights()
 
     for key, value in pairs(glassy) do
-      if highlights[key] then highlights[key] = M.merge_tb(highlights[key], value) end
+      if highlights[key] then highlights[key] = vim.tbl_deep_extend('force', highlights[key], value) end
     end
   end
 
@@ -99,6 +99,7 @@ M.glassy_highlights = function()
     TelescopePromptPrefix = { bg = 'NONE' },
     CursorLine = { bg = 'NONE' },
     Pmenu = { bg = 'NONE' },
+    CmpDocBorder = { bg = 'none', fg = colors.grey },
   }
 end
 
@@ -128,7 +129,7 @@ M.highlights = function()
     Substitute = { fg = theme.base01, bg = theme.base0A, sp = 'none' },
     SpecialKey = { fg = theme.base03 },
     TooLong = { fg = theme.base08 },
-    UnderLined = { fg = theme.base0B },
+    UnderLined = { underline = true },
     Visual = { bg = theme.base02 },
     VisualNOS = { fg = theme.base08 },
     WarningMsg = { fg = theme.base08 },
@@ -151,20 +152,17 @@ M.highlights = function()
     Comment = { fg = colors.grey_fg },
     CursorLineNr = { fg = colors.white },
     LineNr = { fg = colors.grey },
-
     -- floating windows
     FloatBorder = { fg = colors.darker_black, bg = colors.darker_black },
     NormalFloat = { bg = colors.darker_black },
     NvimInternalError = { fg = colors.red },
     WinSeparator = { fg = colors.line },
-
     -- spell
     SpellBad = { undercurl = true, sp = theme.base08 },
     SpellLocal = { undercurl = true, sp = theme.base0C },
     SpellCap = { undercurl = true, sp = theme.base0D },
     SpellRare = { undercurl = true, sp = theme.base0E },
     healthSuccess = { bg = colors.green, fg = colors.black },
-
     -- lazy.nvim
     LazyH1 = { bg = colors.green, fg = colors.black },
     LazyButton = { bg = colors.one_bg, fg = util.change_hex_lightness(colors.light_grey, vim.o.bg == 'dark' and 10 or -20) },
@@ -188,7 +186,6 @@ M.highlights = function()
     LazyReasonSource = { fg = colors.cyan },
     LazyReasonImport = { fg = colors.white },
     LazyProgressDone = { fg = colors.green },
-
     -- Syntax Highlights
     Boolean = { fg = theme.base09 },
     Character = { fg = theme.base08 },
@@ -292,7 +289,6 @@ M.highlights = function()
     ['@property'] = { fg = theme.base08 },
     ['@include'] = { link = 'Include' },
     ['@conditional'] = { link = 'Conditional' },
-
     -- IndentBlanklineChar
     -- IndentBlanklineChar = { fg = colors.line },
     -- IndentBlanklineSpaceChar = { fg = colors.line },
@@ -336,7 +332,6 @@ M.highlights = function()
     NeoTreeGitDeleted = { fg = colors.red },
     -- NvimTreeSpecialFile = { fg = colors.yellow, bold = true, },
     NeoTreeRootName = { fg = colors.red, bold = true },
-
     -- Cmp
     CmpItemAbbr = { fg = colors.white },
     CmpItemAbbrMatch = { fg = colors.blue, bold = true },
@@ -374,7 +369,6 @@ M.highlights = function()
     CmpItemKindOperator = { fg = theme.base05 },
     CmpItemKindTypeParameter = { fg = theme.base08 },
     CmpItemKindCopilot = { fg = colors.green },
-
     -- Cmp item icon
     CmpItemKindConstantIcon = { fg = theme.base09, bg = util.blend(theme.base09, colors.one_bg, 0.15) },
     CmpItemKindFunctionIcon = { fg = theme.base0D, bg = util.blend(theme.base0D, colors.one_bg, 0.15) },
@@ -405,7 +399,6 @@ M.highlights = function()
     CmpItemKindOperatorIcon = { fg = theme.base05, bg = util.blend(theme.base05, colors.one_bg, 0.15) },
     CmpItemKindTypeParameterIcon = { fg = theme.base08, bg = util.blend(theme.base08, colors.one_bg, 0.15) },
     CmpItemKindCopilotIcon = { fg = colors.green, bg = util.blend(colors.green, colors.one_bg, 0.15) },
-
     -- Devicon
     DevIconDefault = { fg = colors.red },
     DevIconc = { fg = colors.blue },
@@ -437,7 +430,6 @@ M.highlights = function()
     DevIconZig = { fg = colors.orange },
     DevIconMd = { fg = colors.blue },
     DevIconTSX = { fg = colors.blue },
-
     -- Git
     DiffAdd = { fg = colors.blue },
     DiffAdded = { fg = colors.green },
@@ -447,7 +439,6 @@ M.highlights = function()
     DiffDelete = { fg = colors.red },
     DiffRemoved = { fg = colors.red },
     DiffText = { fg = colors.white, bg = colors.black2 },
-
     -- git commits
     gitcommitOverflow = { fg = theme.base08 },
     gitcommitSummary = { fg = theme.base08 },
@@ -464,7 +455,6 @@ M.highlights = function()
     gitcommitUnmergedFile = { fg = theme.base08, bold = true },
     gitcommitDiscardedFile = { fg = theme.base08, bold = true },
     gitcommitSelectedFile = { fg = theme.base0B, bold = true },
-
     -- Git Sign
     GitSignsAddNr = { fg = colors.green, bg = util.blend(colors.green, colors.grey, 0.10) },
     GitSignsChangeNr = { fg = colors.light_grey, bg = util.blend(colors.light_grey, colors.grey, 0.10) },
@@ -477,7 +467,6 @@ M.highlights = function()
     GitSignsDeleteInline = { bg = util.blend(colors.red, colors.grey, 0.35) },
     GitSignsAddPreview = { bg = util.blend(colors.green, colors.grey, 0.10) },
     GitSignsDeletePreview = { bg = util.blend(colors.red, colors.grey, 0.10) },
-
     -- LSP References
     LspReferenceText = { fg = colors.darker_black, bg = colors.white },
     LspReferenceRead = { fg = colors.darker_black, bg = colors.white },
@@ -488,7 +477,6 @@ M.highlights = function()
     DiagnosticWarn = { fg = colors.yellow },
     DiagnosticInformation = { fg = colors.green },
     LspSignatureActiveParameter = { fg = colors.black, bg = colors.green },
-
     -- Mason
     MasonHeader = { bg = colors.red, fg = colors.black },
     MasonHighlight = { fg = colors.blue },
@@ -497,11 +485,9 @@ M.highlights = function()
     MasonHeaderSecondary = { link = 'MasonHighlightBlock' },
     MasonMuted = { fg = colors.light_grey },
     MasonMutedBlock = { fg = colors.light_grey, bg = colors.one_bg },
-
     -- Mini Starter
     MiniStarterFooter = { fg = colors.grey_fg },
     MiniStarterHeader = { fg = colors.red },
-
     -- Alpha
     -- AlphaHeader = { fg = colors.grey_fg },
     -- AlphaButtons = { fg = colors.light_grey },
@@ -519,7 +505,6 @@ M.highlights = function()
     TelescopePromptNormal = { fg = colors.white, bg = colors.black2 },
     TelescopeResultsTitle = { fg = colors.darker_black, bg = colors.darker_black },
     TelescopePromptPrefix = { fg = colors.red, bg = colors.black2 },
-
     -- StatusLine
     StatusLine = { bg = colors.statusline_bg },
     -- Modes
@@ -537,7 +522,6 @@ M.highlights = function()
     StatusLineSelectSep = { fg = colors.blue, bg = colors.one_bg3, bold = true },
     StatusLineCommandSep = { fg = colors.dark_purple, bg = colors.one_bg3, bold = true },
     StatusLineTerminalSep = { fg = colors.dark_purple, bg = colors.one_bg3, bold = true },
-
     StatusLinePath = { bg = colors.one_bg3, fg = colors.cyan },
     StatusLinePathSep = { bg = colors.one_bg3, fg = colors.orange },
     StatusLinePathArrow = { fg = colors.one_bg3, bg = colors.lightbg },
@@ -558,7 +542,6 @@ M.highlights = function()
     StatusLineDiagHint = { fg = colors.purple, bg = colors.statusline_bg },
     StatusLineDiagInfo = { fg = colors.green, bg = colors.statusline_bg },
     StatusLineNoice = { link = 'Statement' },
-
     -- Notify
     NotifyERRORBorder = { fg = colors.red },
     NotifyERRORIcon = { fg = colors.red },
@@ -575,7 +558,6 @@ M.highlights = function()
     NotifyTRACEBorder = { fg = colors.purple },
     NotifyTRACEIcon = { fg = colors.purple },
     NotifyTRACETitle = { fg = colors.purple },
-
     -- ts-rainbow2 (maintained fork)
     TSRainbowRed = { fg = colors.red },
     TSRainbowOrange = { fg = colors.orange },
@@ -584,28 +566,23 @@ M.highlights = function()
     TSRainbowBlue = { fg = colors.blue },
     TSRainbowViolet = { fg = colors.purple },
     TSRainbowCyan = { fg = colors.cyan },
-
     -- LspTrouble
     TroubleNormal = { bg = colors.darker_black },
-
     -- Illuminate
     illuminatedWord = { bg = colors.one_bg2 },
     illuminatedCurWord = { bg = colors.one_bg2 },
     IlluminatedWordText = { bg = colors.one_bg2 },
     IlluminatedWordRead = { bg = colors.one_bg2 },
     IlluminatedWordWrite = { bg = colors.one_bg2 },
-
     -- WhichKey
     WhichKey = { fg = colors.blue },
     WhichKeySeparator = { fg = colors.light_grey },
     WhichKeyDesc = { fg = colors.red },
     WhichKeyGroup = { fg = colors.green },
     WhichKeyValue = { fg = colors.green },
-
     -- Quickfix
     qfPosition = { link = 'String' },
     BqfPreviewBorder = { link = 'Comment' },
-
     -- Portal
     PortalNormal = { link = 'Normal' },
     PortalBorder = { link = 'Label' },
