@@ -115,8 +115,8 @@ return {
       return {
         root_dir = require('null-ls.utils').root_pattern('.null-ls-root', '.neoconf.json', 'Makefile', '.git'),
         sources = {
-          nls.formatting.prettier.with({
-            extra_filetypes = { 'svelte', 'liquid' },
+          nls.formatting.rome.with({
+            condition = with_root_file('rome.json'),
           }),
           nls.formatting.phpcsfixer.with({
             condition = with_root_file('.php-cs-fixer.dist.php', '.php-cs-fixer.php'),
@@ -136,7 +136,8 @@ return {
     opts = {
       ensure_installed = {
         'stylua',
-        'prettier',
+        -- 'prettier',
+        'rome',
         'php-cs-fixer',
         'pint',
       },
