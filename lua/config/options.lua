@@ -118,7 +118,7 @@ opt.listchars = {
 }
 o.wrap = false
 o.wrapmargin = 2
-o.textwidth = 150
+o.textwidth = 140
 o.autoindent = true
 o.shiftround = true
 o.expandtab = true

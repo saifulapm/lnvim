@@ -14,6 +14,11 @@ local with_root_file = function(...)
   return function(utils) return utils.root_has_file(files) end
 end
 
+local without_root_file = function(...)
+  local files = { ... }
+  return function(utils) return not utils.root_has_file(files) end
+end
+
 return {
   -- lspconfig
   {
@@ -41,7 +46,7 @@ return {
           end,
         },
       },
-      autoformat = true,
+      autoformat = false,
       servers = {
         intelephense = {
           settings = {
@@ -106,6 +111,15 @@ return {
         },
         volar = {},
       },
+      setup = {
+        eslint = function()
+          vim.api.nvim_create_autocmd('BufWritePre', {
+            callback = function(event)
+              if require('lspconfig.util').get_active_client_by_name(event.buf, 'eslint') then vim.cmd('EslintFixAll') end
+            end,
+          })
+        end,
+      },
     },
   },
   {
@@ -115,8 +129,15 @@ return {
       return {
         root_dir = require('null-ls.utils').root_pattern('.null-ls-root', '.neoconf.json', 'Makefile', '.git'),
         sources = {
-          nls.formatting.rome.with({
-            condition = with_root_file('rome.json'),
+          nls.formatting.prettierd.with({
+            condition = without_root_file(
+              '.eslintrc',
+              '.eslintrc.js',
+              '.eslintrc.cjs',
+              '.eslintrc.yaml',
+              '.eslintrc.yml',
+              '.eslintrc.json'
+            ),
           }),
           nls.formatting.phpcsfixer.with({
             condition = with_root_file('.php-cs-fixer.dist.php', '.php-cs-fixer.php'),
@@ -136,8 +157,8 @@ return {
     opts = {
       ensure_installed = {
         'stylua',
-        -- 'prettier',
-        'rome',
+        'prettierd',
+        -- 'rome',
         'php-cs-fixer',
         'pint',
       },
