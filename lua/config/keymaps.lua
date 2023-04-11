@@ -65,6 +65,9 @@ vim.keymap.set('n', 'gZ', function() require('utils.zen').enter() end)
 
 vim.keymap.set('n', 'gzz', function() require('utils.zen').toggle({ laststatus = true }) end)
 
+-- Togggle Theme
+vim.keymap.set('n', '<leader>ut', function() require('themes').setup() end, { desc = 'Toggle Theme' })
+
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 --  Laravel Specific Keymaps
 ------------------------------------------------------------------------------------------------------------------------------------------------------
