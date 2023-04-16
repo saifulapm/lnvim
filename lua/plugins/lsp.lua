@@ -46,7 +46,7 @@ return {
           end,
         },
       },
-      autoformat = false,
+      autoformat = true,
       servers = {
         intelephense = {
           settings = {
