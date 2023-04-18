@@ -99,12 +99,15 @@ return {
   },
   {
     'cbochs/portal.nvim',
+    version = '*',
     cmd = { 'Portal' },
     keys = {
       { '<leader>jb', '<cmd>Portal jumplist backward<cr>', desc = 'jump: backwards' },
       { '<leader>jf', '<cmd>Portal jumplist forward<cr>', desc = 'jump: forwards' },
     },
-    config = true,
+    opts = {
+      filter = function(c) return vim.startswith(vim.api.nvim_buf_get_name(c.buffer), vim.fn.getcwd()) end,
+    },
   },
   { 'AndrewRadev/linediff.vim', cmd = 'Linediff' },
   {

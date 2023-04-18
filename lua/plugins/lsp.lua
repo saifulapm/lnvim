@@ -32,8 +32,8 @@ return {
     end,
     opts = {
       diagnostics = {
-        underline = true,
-        virtual_text = false,
+        underline = false,
+        virtual_text = { enable = false },
         float = {
           format = function(diagnostic) return trim(diagnostic.message) end,
           prefix = function(diagnostic, i, total)
@@ -196,5 +196,9 @@ return {
         )
       end
     end,
+  },
+  {
+    'smjonas/inc-rename.nvim',
+    opts = { hl_group = 'Visual', preview_empty_name = true },
   },
 }
