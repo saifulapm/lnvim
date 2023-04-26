@@ -190,7 +190,7 @@ return {
         telescope.load_extension('flutter')
         vim.keymap.set(
           { 'n' },
-          '<LocalLeader>fl',
+          '<LocalLeader>of',
           function() telescope.extensions.flutter.commands() end,
           { silent = true, buffer = true, desc = 'Flutter Tools' }
         )
