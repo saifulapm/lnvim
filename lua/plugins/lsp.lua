@@ -33,7 +33,7 @@ return {
     opts = {
       diagnostics = {
         underline = false,
-        virtual_text = { enable = false },
+        virtual_text = false,
         float = {
           format = function(diagnostic) return trim(diagnostic.message) end,
           prefix = function(diagnostic, i, total)
