@@ -11,7 +11,7 @@ return {
           Error = '',
           Warn = '',
           Hint = '',
-          Info = '',
+          Info = '',
         },
         git = {
           added = ' ',
