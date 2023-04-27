@@ -95,7 +95,7 @@ return {
           ),
           settings = {
             format = {
-              enable = true,
+              enable = false,
             },
             workingDirectory = { mode = 'auto' },
           },
