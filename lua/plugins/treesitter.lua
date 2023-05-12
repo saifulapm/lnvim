@@ -49,7 +49,6 @@ return {
       },
     },
     dependencies = {
-      { 'JoosepAlviste/nvim-ts-context-commentstring' },
       { 'HiPhish/nvim-ts-rainbow2' },
       {
         'nvim-treesitter/playground',

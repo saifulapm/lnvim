@@ -109,6 +109,7 @@ return {
             end,
           },
         },
+        denols = {},
         volar = {},
       },
       setup = {
