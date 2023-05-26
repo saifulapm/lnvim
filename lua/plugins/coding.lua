@@ -60,6 +60,11 @@ return {
           return item
         end,
       }
+      opts.experimental = {
+        ghost_text = {
+          hl_group = 'Comment',
+        },
+      }
     end,
   },
   {
