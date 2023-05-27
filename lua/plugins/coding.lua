@@ -61,9 +61,7 @@ return {
         end,
       }
       opts.experimental = {
-        ghost_text = {
-          hl_group = 'Comment',
-        },
+        ghost_text = false,
       }
     end,
   },
