@@ -111,6 +111,9 @@ return {
         },
         denols = {},
         volar = {},
+        emmet_ls = {
+          filetypes = { 'html', 'javascriptreact', 'typescriptreact', 'liquid' },
+        },
       },
       setup = {
         eslint = function()
