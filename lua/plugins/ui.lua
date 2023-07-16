@@ -5,7 +5,7 @@ return {
     'folke/noice.nvim',
     opts = {
       lsp = {
-        progress = { enabled = false },
+        progress = { enabled = true },
         documentation = {
           opts = {
             position = { row = 2 },
@@ -121,32 +121,22 @@ return {
       },
     },
   },
+  -- {
+  --   'echasnovski/mini.starter',
+  --   opts = function(_, opts)
+  --     opts.header = table.concat(require('utils').get_weekday(), '\n')
+  --     opts.content_hooks = nil
+  --     opts.footer = table.concat(require('utils.fortune').get_fortune(), '\n')
+  --   end,
+  -- },
   {
-    'echasnovski/mini.starter',
-    opts = function(_, opts)
-      opts.header = table.concat(require('utils').get_weekday(), '\n')
-      opts.content_hooks = nil
-      opts.footer = table.concat(require('utils.fortune').get_fortune(), '\n')
-    end,
-    config = function(_, opts)
-      require('mini.starter').setup(opts)
-
-      vim.api.nvim_create_autocmd('User', {
-        pattern = 'MiniStarterOpened',
-        callback = function(args)
-          vim.opt_local.laststatus = 0
-          vim.api.nvim_create_autocmd('BufUnload', {
-            buffer = args.buf,
-            callback = function() vim.opt_local.laststatus = 3 end,
-          })
-        end,
-      })
-    end,
+    'goolord/alpha-nvim',
+    opts = function(_, opts) opts.section.header.val = require('utils').get_weekday() end,
   },
   {
     'echasnovski/mini.indentscope',
     opts = {
-      symbol = '▏', -- "│", -- ▏┆┊
+      symbol = '│', -- "│", -- ▏┆┊
     },
   },
   {

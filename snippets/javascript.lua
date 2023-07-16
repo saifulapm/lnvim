@@ -3,6 +3,7 @@
 return {
   s({ trig = 'cl', name = 'Console Log' }, fmt('console.log({});', i(1))),
   s({ trig = 'ds', name = 'Query Selector' }, fmt('document.querySelector({})', i(1))),
+  s({ trig = 'dsa', name = 'Query SelectorAll' }, fmt('document.querySelectorAll(({}) => {})', { i(1), i(2) })),
   -- Function declaration
   s(
     'f',
@@ -72,7 +73,8 @@ describe('{}', () => {{
       {
         d(1, function(_, snip)
           local filename, _ = (snip.env.TM_DIRECTORY .. '/' .. snip.env.TM_FILENAME_BASE):gsub(vim.pesc(vim.loop.cwd() .. '/'), '')
-          local filename_without_junk, _ = filename:gsub('^test/', ''):gsub('^src/', ''):gsub('.spec$', ''):gsub('.test$', ''):gsub('__tests__/', '')
+          local filename_without_junk, _ =
+            filename:gsub('^test/', ''):gsub('^src/', ''):gsub('.spec$', ''):gsub('.test$', ''):gsub('__tests__/', '')
 
           return sn(nil, {
             i(1, filename_without_junk),

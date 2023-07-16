@@ -69,6 +69,9 @@ return {
     end),
     i(0),
   }),
+  s({ trig = 'cl', name = 'Console Log' }, fmt('console.log({});', i(1))),
+  s({ trig = 'ds', name = 'Query Selector' }, fmt('document.querySelector({})', i(1))),
+  s({ trig = 'dsa', name = 'Query SelectorAll' }, fmt('document.querySelectorAll(({}) => {})', { i(1), i(2) })),
   s(
     { trig = 'hr', name = 'Header' },
     fmt(

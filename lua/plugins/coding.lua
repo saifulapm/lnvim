@@ -22,7 +22,7 @@ return {
   {
     'hrsh7th/nvim-cmp',
     opts = function(_, opts)
-      opts.completion = { keyword_length = 3 }
+      opts.completion = { keyword_length = 2 }
       opts.window = {
         completion = {
           side_padding = 0,
@@ -63,6 +63,29 @@ return {
       opts.experimental = {
         ghost_text = false,
       }
+
+      local cmp = require('cmp')
+      local luasnip = require('luasnip')
+      local function shift_tab(fallback)
+        if not cmp.visible() then return fallback() end
+        if luasnip.jumpable(-1) then luasnip.jump(-1) end
+      end
+
+      local function tab(fallback) -- make TAB behave like Android Studio
+        if not cmp.visible() then return fallback() end
+        if not cmp.get_selected_entry() then return cmp.select_next_item({ behavior = cmp.SelectBehavior.Select }) end
+        if luasnip.expand_or_jumpable() then return luasnip.expand_or_jump() end
+        cmp.confirm()
+      end
+
+      opts.mapping = cmp.mapping.preset.insert({
+        ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i' }),
+        ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i' }),
+        ['<C-space>'] = cmp.mapping.complete(),
+        ['<CR>'] = cmp.mapping.confirm({ select = false }),
+        ['<S-TAB>'] = cmp.mapping(shift_tab, { 'i', 's' }),
+        ['<TAB>'] = cmp.mapping(tab, { 'i', 's' }),
+      })
     end,
   },
   {
@@ -118,14 +141,6 @@ return {
       })
     end,
   },
-  -- {
-  --   'numToStr/Comment.nvim',
-  --   keys = { 'gcc', { 'gc', mode = { 'x', 'n', 'o' } } },
-  --   opts = function(_, opts)
-  --     local ok, integration = pcall(require, 'ts_context_commentstring.integrations.comment_nvim')
-  --     if ok then opts.pre_hook = integration.create_pre_hook() end
-  --   end,
-  -- },
   {
     'L3MON4D3/LuaSnip',
     event = 'InsertEnter',
@@ -197,15 +212,5 @@ return {
     'danymat/neogen',
     cmd = 'Neogen',
     opts = { snippet_engine = 'luasnip' },
-  },
-  {
-    'jackMort/ChatGPT.nvim',
-    cmd = 'ChatGPT',
-    config = true,
-    dependencies = {
-      'MunifTanjim/nui.nvim',
-      'nvim-lua/plenary.nvim',
-      'nvim-telescope/telescope.nvim',
-    },
   },
 }

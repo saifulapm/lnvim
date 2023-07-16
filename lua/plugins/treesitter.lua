@@ -9,7 +9,6 @@ return {
         'html',
         'javascript',
         'json',
-        'lua',
         'luap',
         'markdown',
         'markdown_inline',
@@ -19,6 +18,15 @@ return {
         'typescript',
         'vim',
         'vue',
+        'bash',
+        'c',
+        'lua',
+        'luadoc',
+        'python',
+        'query',
+        'regex',
+        'vimdoc',
+        'yaml',
       },
       highlight = {
         enable = true,
@@ -42,17 +50,6 @@ return {
       indent = {
         enable = true,
         disable = function(lang, bufnr) return lang == 'python' or ts_disable(bufnr) end,
-      },
-      rainbow = {
-        enable = true,
-        disable = function(_, bufnr) return ts_disable(bufnr) end,
-      },
-    },
-    dependencies = {
-      { 'HiPhish/nvim-ts-rainbow2' },
-      {
-        'nvim-treesitter/playground',
-        cmd = { 'TSPlaygroundToggle' },
       },
     },
   },

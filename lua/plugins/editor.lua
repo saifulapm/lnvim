@@ -60,17 +60,6 @@ return {
     end,
   },
   {
-    'gbprod/substitute.nvim',
-    config = true,
-    keys = {
-      { 'S', function() require('substitute').visual() end, mode = 'x' },
-      { 'S', function() require('substitute').operator() end, mode = 'n' },
-      { 'X', function() require('substitute.exchange').operator() end, mode = 'n' },
-      { 'X', function() require('substitute.exchange').visual() end, mode = 'x' },
-      { 'Xc', function() require('substitute.exchange').cancel() end, mode = { 'n', 'x' } },
-    },
-  },
-  {
     'nvim-neo-tree/neo-tree.nvim',
     keys = {
       { '<C-n>', '<leader>fE', desc = 'Explorer NeoTree (root dir)', remap = true },
@@ -78,10 +67,6 @@ return {
     opts = {
       window = {
         mappings = { o = 'toggle_node', ['<CR>'] = 'open', ['<c-s>'] = 'open_split', ['<c-v>'] = 'open_vsplit' },
-      },
-      nesting_rules = {
-        ['dart'] = { 'freezed.dart', 'g.dart' },
-        ['json'] = { 'package.json', 'package-lock.json', 'bower.json', 'firebase.json', 'package.nls*.json' },
       },
     },
   },
@@ -108,16 +93,6 @@ return {
     opts = {
       filter = function(c) return vim.startswith(vim.api.nvim_buf_get_name(c.buffer), vim.fn.getcwd()) end,
     },
-  },
-  { 'AndrewRadev/linediff.vim', cmd = 'Linediff' },
-  {
-    url = 'https://gitlab.com/yorickpeterse/nvim-pqf',
-    event = 'VeryLazy',
-    config = true,
-  },
-  {
-    'kevinhwang91/nvim-bqf',
-    ft = 'qf',
   },
   {
     'ThePrimeagen/harpoon',

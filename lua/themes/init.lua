@@ -66,41 +66,7 @@ M.load_highlights = function()
     end
   end
 
-  -- transparency
-  if vim.g.transparency then
-    local glassy = M.glassy_highlights()
-
-    for key, value in pairs(glassy) do
-      if highlights[key] then highlights[key] = vim.tbl_deep_extend('force', highlights[key], value) end
-    end
-  end
-
   return highlights
-end
-
-M.glassy_highlights = function()
-  local colors = M.load_colors('base_30')
-
-  return {
-    NvimTreeWinSeparator = { fg = colors.one_bg2, bg = 'NONE' },
-    TelescopeResultsTitle = { fg = colors.black, bg = colors.blue },
-    TelescopeBorder = { fg = colors.grey, bg = 'NONE' },
-    TelescopePromptBorder = { fg = colors.grey, bg = 'NONE' },
-    NormalFloat = { bg = 'NONE' },
-    Normal = { bg = 'NONE' },
-    Folded = { bg = 'NONE' },
-    NvimTreeNormal = { bg = 'NONE' },
-    NvimTreeNormalNC = { bg = 'NONE' },
-    NvimTreeCursorLine = { bg = 'NONE' },
-    TelescopeNormal = { bg = 'NONE' },
-    TelescopePrompt = { bg = 'NONE' },
-    TelescopeResults = { bg = 'NONE' },
-    TelescopePromptNormal = { bg = 'NONE' },
-    TelescopePromptPrefix = { bg = 'NONE' },
-    CursorLine = { bg = 'NONE' },
-    Pmenu = { bg = 'NONE' },
-    CmpDocBorder = { bg = 'none', fg = colors.grey },
-  }
 end
 
 M.highlights = function()
@@ -318,25 +284,6 @@ M.highlights = function()
     -- IndentBlanklineContextChar = { fg = colors.grey },
     -- IndentBlanklineContextStart = { bg = colors.one_bg2 },
 
-    -- Nvim Tree
-    -- NvimTreeEmptyFolderName = { fg = colors.folder_bg },
-    -- NvimTreeEndOfBuffer = { fg = colors.darker_black },
-    -- NvimTreeFolderIcon = { fg = colors.folder_bg },
-    -- NvimTreeFolderName = { fg = colors.folder_bg },
-    -- NvimTreeGitDirty = { fg = colors.red },
-    -- NvimTreeIndentMarker = { fg = colors.grey_fg },
-    -- NvimTreeNormal = { bg = colors.darker_black },
-    -- NvimTreeNormalNC = { bg = colors.darker_black },
-    -- NvimTreeOpenedFolderName = { fg = colors.folder_bg },
-    -- NvimTreeGitIgnored = { fg = colors.light_grey },
-    -- NvimTreeWinSeparator = { fg = colors.darker_black, bg = colors.darker_black, },
-    -- NvimTreeWindowPicker = { fg = colors.red, bg = colors.black2, },
-    -- NvimTreeCursorLine = { bg = colors.black2, },
-    -- NvimTreeGitNew = { fg = colors.yellow, },
-    -- NvimTreeGitDeleted = { fg = colors.red, },
-    -- NvimTreeSpecialFile = { fg = colors.yellow, bold = true, },
-    -- NvimTreeRootFolder = { fg = colors.red, bold = true, },
-
     -- Neo Tree
     -- NvimTreeEmptyFolderName = { fg = colors.folder_bg },
     NeoTreeEndOfBuffer = { fg = colors.darker_black },
@@ -422,37 +369,6 @@ M.highlights = function()
     CmpItemKindOperatorIcon = { fg = theme.base05, bg = util.blend(theme.base05, colors.one_bg, 0.15) },
     CmpItemKindTypeParameterIcon = { fg = theme.base08, bg = util.blend(theme.base08, colors.one_bg, 0.15) },
     CmpItemKindCopilotIcon = { fg = colors.green, bg = util.blend(colors.green, colors.one_bg, 0.15) },
-    -- Devicon
-    DevIconDefault = { fg = colors.red },
-    DevIconc = { fg = colors.blue },
-    DevIconcss = { fg = colors.blue },
-    DevIcondeb = { fg = colors.cyan },
-    DevIconDockerfile = { fg = colors.cyan },
-    DevIconhtml = { fg = colors.baby_pink },
-    DevIconjpeg = { fg = colors.dark_purple },
-    DevIconjpg = { fg = colors.dark_purple },
-    DevIconjs = { fg = colors.sun },
-    DevIconkt = { fg = colors.orange },
-    DevIconlock = { fg = colors.red },
-    DevIconlua = { fg = colors.blue },
-    DevIconmp3 = { fg = colors.white },
-    DevIconmp4 = { fg = colors.white },
-    DevIconout = { fg = colors.white },
-    DevIconpng = { fg = colors.dark_purple },
-    DevIconpy = { fg = colors.cyan },
-    DevIcontoml = { fg = colors.blue },
-    DevIconts = { fg = colors.teal },
-    DevIconttf = { fg = colors.white },
-    DevIconrb = { fg = colors.pink },
-    DevIconrpm = { fg = colors.orange },
-    DevIconvue = { fg = colors.vibrant_green },
-    DevIconwoff = { fg = colors.white },
-    DevIconwoff2 = { fg = colors.white },
-    DevIconxz = { fg = colors.sun },
-    DevIconzip = { fg = colors.sun },
-    DevIconZig = { fg = colors.orange },
-    DevIconMd = { fg = colors.blue },
-    DevIconTSX = { fg = colors.blue },
     -- Git
     DiffAdd = { fg = colors.blue },
     DiffAdded = { fg = colors.green },
@@ -509,11 +425,11 @@ M.highlights = function()
     MasonMuted = { fg = colors.light_grey },
     MasonMutedBlock = { fg = colors.light_grey, bg = colors.one_bg },
     -- Mini Starter
-    MiniStarterFooter = { fg = colors.grey_fg },
-    MiniStarterHeader = { fg = colors.red },
+    -- MiniStarterFooter = { fg = colors.grey_fg },
+    -- MiniStarterHeader = { fg = colors.red },
     -- Alpha
-    -- AlphaHeader = { fg = colors.grey_fg },
-    -- AlphaButtons = { fg = colors.light_grey },
+    AlphaHeader = { fg = colors.grey_fg },
+    AlphaButtons = { fg = colors.light_grey },
 
     -- Telescope
     TelescopeNormal = { bg = colors.darker_black },
@@ -529,42 +445,42 @@ M.highlights = function()
     TelescopeResultsTitle = { fg = colors.darker_black, bg = colors.darker_black },
     TelescopePromptPrefix = { fg = colors.red, bg = colors.black2 },
     -- StatusLine
-    StatusLine = { bg = colors.statusline_bg },
+    -- StatusLine = { bg = colors.statusline_bg },
     -- Modes
-    StatusLineNormal = { bg = colors.nord_blue, fg = colors.black, bold = true },
-    StatusLineInsert = { bg = colors.green, fg = colors.black, bold = true },
-    StatusLineVisual = { bg = colors.cyan, fg = colors.black, bold = true },
-    StatusLineReplace = { bg = colors.orange, fg = colors.black, bold = true },
-    StatusLineSelect = { bg = colors.blue, fg = colors.black, bold = true },
-    StatusLineCommand = { bg = colors.dark_purple, fg = colors.black, bold = true },
-    StatusLineTerminal = { bg = colors.dark_purple, fg = colors.black, bold = true },
-    StatusLineNormalSep = { fg = colors.nord_blue, bg = colors.one_bg3, bold = true },
-    StatusLineInsertSep = { fg = colors.green, bg = colors.one_bg3, bold = true },
-    StatusLineVisualSep = { fg = colors.cyan, bg = colors.one_bg3, bold = true },
-    StatusLineReplaceSep = { fg = colors.orange, bg = colors.one_bg3, bold = true },
-    StatusLineSelectSep = { fg = colors.blue, bg = colors.one_bg3, bold = true },
-    StatusLineCommandSep = { fg = colors.dark_purple, bg = colors.one_bg3, bold = true },
-    StatusLineTerminalSep = { fg = colors.dark_purple, bg = colors.one_bg3, bold = true },
-    StatusLinePath = { bg = colors.one_bg3, fg = colors.cyan },
-    StatusLinePathSep = { bg = colors.one_bg3, fg = colors.orange },
-    StatusLinePathArrow = { fg = colors.one_bg3, bg = colors.lightbg },
-    StatusLineFileName = { bg = colors.lightbg, fg = colors.white },
-    StatusLineFileArrow = { fg = colors.lightbg, bg = colors.statusline_bg },
-    StatusLineLineCol = { bg = colors.lightbg, fg = colors.green },
-    StatusLineLines = { bg = colors.one_bg3, fg = colors.white, bold = true },
-    StatusLineLinesArrow = { fg = colors.one_bg3, bg = colors.lightbg, bold = true },
-    StatusLineColArrow = { fg = colors.lightbg, bg = colors.statusline_bg },
-    StatusLineEmptySpace = { fg = colors.grey, bg = colors.statusline_bg },
-    StatusLineLsp = { fg = colors.nord_blue, bg = colors.statusline_bg },
-    StatusLineGitBranch = { fg = colors.light_grey, bg = colors.statusline_bg, bold = true },
-    StatusLineGitAdd = { fg = colors.green, bg = colors.statusline_bg },
-    StatusLineGitChange = { fg = colors.light_grey, bg = colors.statusline_bg },
-    StatusLineGitDelete = { fg = colors.red, bg = colors.statusline_bg },
-    StatusLineDiagError = { fg = colors.red, bg = colors.statusline_bg },
-    StatusLineDiagWarn = { fg = colors.yellow, bg = colors.statusline_bg },
-    StatusLineDiagHint = { fg = colors.purple, bg = colors.statusline_bg },
-    StatusLineDiagInfo = { fg = colors.green, bg = colors.statusline_bg },
-    StatusLineNoice = { link = 'Statement' },
+    -- StatusLineNormal = { bg = colors.nord_blue, fg = colors.black, bold = true },
+    -- StatusLineInsert = { bg = colors.green, fg = colors.black, bold = true },
+    -- StatusLineVisual = { bg = colors.cyan, fg = colors.black, bold = true },
+    -- StatusLineReplace = { bg = colors.orange, fg = colors.black, bold = true },
+    -- StatusLineSelect = { bg = colors.blue, fg = colors.black, bold = true },
+    -- StatusLineCommand = { bg = colors.dark_purple, fg = colors.black, bold = true },
+    -- StatusLineTerminal = { bg = colors.dark_purple, fg = colors.black, bold = true },
+    -- StatusLineNormalSep = { fg = colors.nord_blue, bg = colors.one_bg3, bold = true },
+    -- StatusLineInsertSep = { fg = colors.green, bg = colors.one_bg3, bold = true },
+    -- StatusLineVisualSep = { fg = colors.cyan, bg = colors.one_bg3, bold = true },
+    -- StatusLineReplaceSep = { fg = colors.orange, bg = colors.one_bg3, bold = true },
+    -- StatusLineSelectSep = { fg = colors.blue, bg = colors.one_bg3, bold = true },
+    -- StatusLineCommandSep = { fg = colors.dark_purple, bg = colors.one_bg3, bold = true },
+    -- StatusLineTerminalSep = { fg = colors.dark_purple, bg = colors.one_bg3, bold = true },
+    -- StatusLinePath = { bg = colors.one_bg3, fg = colors.cyan },
+    -- StatusLinePathSep = { bg = colors.one_bg3, fg = colors.orange },
+    -- StatusLinePathArrow = { fg = colors.one_bg3, bg = colors.lightbg },
+    -- StatusLineFileName = { bg = colors.lightbg, fg = colors.white },
+    -- StatusLineFileArrow = { fg = colors.lightbg, bg = colors.statusline_bg },
+    -- StatusLineLineCol = { bg = colors.lightbg, fg = colors.green },
+    -- StatusLineLines = { bg = colors.one_bg3, fg = colors.white, bold = true },
+    -- StatusLineLinesArrow = { fg = colors.one_bg3, bg = colors.lightbg, bold = true },
+    -- StatusLineColArrow = { fg = colors.lightbg, bg = colors.statusline_bg },
+    -- StatusLineEmptySpace = { fg = colors.grey, bg = colors.statusline_bg },
+    -- StatusLineLsp = { fg = colors.nord_blue, bg = colors.statusline_bg },
+    -- StatusLineGitBranch = { fg = colors.light_grey, bg = colors.statusline_bg, bold = true },
+    -- StatusLineGitAdd = { fg = colors.green, bg = colors.statusline_bg },
+    -- StatusLineGitChange = { fg = colors.light_grey, bg = colors.statusline_bg },
+    -- StatusLineGitDelete = { fg = colors.red, bg = colors.statusline_bg },
+    -- StatusLineDiagError = { fg = colors.red, bg = colors.statusline_bg },
+    -- StatusLineDiagWarn = { fg = colors.yellow, bg = colors.statusline_bg },
+    -- StatusLineDiagHint = { fg = colors.purple, bg = colors.statusline_bg },
+    -- StatusLineDiagInfo = { fg = colors.green, bg = colors.statusline_bg },
+    -- StatusLineNoice = { link = 'Statement' },
     -- Notify
     NotifyERRORBorder = { fg = colors.red },
     NotifyERRORIcon = { fg = colors.red },
