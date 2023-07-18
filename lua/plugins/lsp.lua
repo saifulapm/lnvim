@@ -16,6 +16,7 @@ return {
     opts = {
       diagnostics = {
         underline = false,
+        virtual_text = false,
         float = {
           format = function(diagnostic) return trim(diagnostic.message) end,
           prefix = function(diagnostic, i, total)
@@ -42,6 +43,55 @@ return {
         theme_check = {},
         svelte = {},
         cssls = {},
+        rust_analyzer = {},
+        tailwindcss = {
+          root_dir = require('lspconfig.util').root_pattern('tailwind.config.js', 'tailwind.config.ts'),
+        },
+        tsserver = {
+          init_options = {
+            hostInfo = 'neovim',
+            preferences = {
+              quotePreference = 'double',
+              includeCompletionsWithSnippetText = true,
+              generateReturnInDocTemplate = true,
+              includeInlayParameterNameHints = 'all',
+              includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+              includeInlayFunctionParameterTypeHints = true,
+              includeInlayVariableTypeHints = true,
+              includeInlayPropertyDeclarationTypeHints = true,
+              includeInlayFunctionLikeReturnTypeHints = true,
+              includeInlayEnumMemberValueHints = true,
+            },
+          },
+          settings = {
+            format = false,
+          },
+        },
+        eslint = {
+          root_dir = require('lspconfig.util').root_pattern(
+            '.eslintrc',
+            '.eslintrc.js',
+            '.eslintrc.cjs',
+            '.eslintrc.yaml',
+            '.eslintrc.yml',
+            '.eslintrc.json'
+          ),
+          settings = {
+            format = {
+              enable = false,
+            },
+            workingDirectory = { mode = 'auto' },
+          },
+          handlers = {
+            -- this error shows up occasionally when formatting
+            -- formatting actually works, so this will supress it
+            ['window/showMessageRequest'] = function(_, result)
+              if result.message:find('ENOENT') then return vim.NIL end
+
+              return vim.lsp.handlers['window/showMessageRequest'](nil, result)
+            end,
+          },
+        },
         denols = {},
         volar = {},
         emmet_ls = {
@@ -54,6 +104,22 @@ return {
     'jose-elias-alvarez/null-ls.nvim',
     opts = function(_, opts)
       local nls = require('null-ls')
+      table.insert(
+        opts.sources,
+        nls.builtins.formatting.prettierd.with({
+          condition = function(utils)
+            return utils.root_has_file({
+              '.eslintrc',
+              '.eslintrc.js',
+              '.eslintrc.cjs',
+              '.eslintrc.yaml',
+              '.eslintrc.yml',
+              '.eslintrc.json',
+            })
+          end,
+        })
+      )
+
       table.insert(
         opts.sources,
         nls.builtins.formatting.phpcsfixer.with({
@@ -75,6 +141,7 @@ return {
       ensure_installed = {
         'php-cs-fixer',
         'pint',
+        'prettierd',
       },
     },
   },

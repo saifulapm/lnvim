@@ -23,7 +23,7 @@ o.splitbelow = true
 o.splitright = true
 o.eadirection = 'hor'
 -- exclude usetab as we do not want to jump to buffers in already open tabs
--- do not use split or vsplit to ensure we don't open any new windows
+-- do not use split or vsplit to ensure we don't open any new wondows
 o.switchbuf = 'useopen,uselast'
 opt.fillchars = {
   eob = ' ', -- suppress ~ at EndOfBuffer
@@ -135,7 +135,7 @@ opt.completeopt = { 'menuone', 'noinsert', 'noselect' }
 o.hlsearch = true
 o.autowriteall = true -- automatically :write before running commands and changing files
 opt.clipboard = ''
--- o.laststatus = 3
+o.laststatus = 0
 o.termguicolors = true
 o.guifont = 'MonoLisa variable:h15'
 o.linespace = 0

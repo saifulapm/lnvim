@@ -121,17 +121,13 @@ return {
       },
     },
   },
-  -- {
-  --   'echasnovski/mini.starter',
-  --   opts = function(_, opts)
-  --     opts.header = table.concat(require('utils').get_weekday(), '\n')
-  --     opts.content_hooks = nil
-  --     opts.footer = table.concat(require('utils.fortune').get_fortune(), '\n')
-  --   end,
-  -- },
   {
-    'goolord/alpha-nvim',
-    opts = function(_, opts) opts.section.header.val = require('utils').get_weekday() end,
+    'echasnovski/mini.starter',
+    opts = function(_, opts)
+      opts.header = table.concat(require('utils').get_weekday(), '\n')
+      opts.content_hooks = nil
+      opts.footer = table.concat(require('utils.fortune').get_fortune(), '\n')
+    end,
   },
   {
     'echasnovski/mini.indentscope',

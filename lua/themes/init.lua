@@ -305,6 +305,7 @@ M.highlights = function()
     -- Cmp
     CmpItemAbbr = { fg = colors.white },
     CmpItemAbbrMatch = { fg = colors.blue, bold = true },
+    CmpDoc = { bg = colors.darker_black },
     CmpDocBorder = { fg = colors.darker_black, bg = colors.darker_black },
     CmpPmenu = { bg = colors.one_bg },
     CmpSel = { link = 'PmenuSel', bold = true },
@@ -370,6 +371,8 @@ M.highlights = function()
     CmpItemKindTypeParameterIcon = { fg = theme.base08, bg = util.blend(theme.base08, colors.one_bg, 0.15) },
     CmpItemKindCopilotIcon = { fg = colors.green, bg = util.blend(colors.green, colors.one_bg, 0.15) },
     -- Git
+    diffOldFile = { fg = colors.baby_pink },
+    diffNewFile = { fg = colors.blue },
     DiffAdd = { fg = colors.blue },
     DiffAdded = { fg = colors.green },
     DiffChange = { fg = colors.light_grey },
