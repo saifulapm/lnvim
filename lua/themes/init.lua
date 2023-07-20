@@ -448,7 +448,7 @@ M.highlights = function()
     TelescopeResultsTitle = { fg = colors.darker_black, bg = colors.darker_black },
     TelescopePromptPrefix = { fg = colors.red, bg = colors.black2 },
     -- StatusLine
-    -- StatusLine = { bg = colors.statusline_bg },
+    StatusLine = { fg = colors.statusline_bg },
     -- Modes
     -- StatusLineNormal = { bg = colors.nord_blue, fg = colors.black, bold = true },
     -- StatusLineInsert = { bg = colors.green, fg = colors.black, bold = true },
