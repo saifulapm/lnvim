@@ -136,7 +136,7 @@ o.hlsearch = true
 o.autowriteall = true -- automatically :write before running commands and changing files
 opt.clipboard = ''
 o.laststatus = 3
-o.statusline = " %(%r %)%{%&bt==''?&ft==''?'%f':'%f %LL %m%=%l,%-2c':''%} "
+-- o.statusline = " %(%r %)%{%&bt==''?&ft==''?'%f':'%f %LL %m%=%l,%-2c':''%} "
 o.termguicolors = true
 o.guifont = 'MonoLisa variable:h15'
 o.linespace = 0

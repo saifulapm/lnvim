@@ -5,7 +5,7 @@ return {
     'folke/noice.nvim',
     opts = {
       lsp = {
-        progress = { enabled = true },
+        progress = { enabled = false },
         documentation = {
           opts = {
             position = { row = 2 },
