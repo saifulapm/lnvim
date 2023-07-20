@@ -37,65 +37,6 @@ local function alias_mode()
   }
 end
 
-local function get_icon()
-  -- fuzzy match by extension
-  local icons_by_file_extension = {
-    ['bash'] = { icon = '', color = '#89e051' },
-    ['conf'] = { icon = '', color = '#6d8086' },
-    ['css'] = { icon = '', color = '#42a5f5' },
-    ['dart'] = { icon = '', color = '#03589C' },
-    ['git'] = { icon = '', color = '#F14C28' },
-    ['go'] = { icon = '', color = '#519aba', cterm_color = '74', name = 'Go' },
-    ['graphql'] = { icon = '', color = '#e535ab' },
-    ['gql'] = { icon = '', color = '#e535ab' },
-    ['html'] = { icon = '', color = '#e44d26' },
-    ['js'] = { icon = '', color = '#cbcb41', cterm_color = '185', name = 'Js' },
-    ['json'] = { icon = '', color = '#cbcb41' },
-    ['jsx'] = { icon = '', color = '#20c2e3' },
-    ['lua'] = { icon = '', color = '#51a0cf' },
-    ['markdown'] = { icon = '', color = '#519aba' },
-    ['md'] = { icon = '', color = '#ffffff' },
-    ['php'] = { icon = '', color = '#a074c4' },
-    ['rb'] = { icon = '', color = '#701516' },
-    ['scss'] = { icon = '', color = '#f55385' },
-    ['sql'] = { icon = '', color = '#dad8d8' },
-    ['svelte'] = { icon = '', color = '#ff3e00' },
-    ['terminal'] = { icon = '', color = '#31B53E' },
-    ['toml'] = { icon = '', color = '#6d8086' },
-    ['ts'] = { icon = '', color = '#519aba', cterm_color = '74', name = 'Ts' },
-    ['tsx'] = { icon = '', color = '#1354bf' },
-    ['txt'] = { icon = '', color = '#89e051' },
-    ['vim'] = { icon = '', color = '#019833' },
-    ['vue'] = { icon = '﵂', color = '#8dc149' },
-    ['zsh'] = { icon = '', color = '#89e051' },
-    ['prisma'] = { icon = '卑', color = '#ffffff' },
-    ['lock'] = { icon = '', color = '#bbbbbb' },
-    ['log'] = { icon = '', color = '#ffffff' },
-    ['wasm'] = { icon = '', color = '#5c4cdb' },
-    ['liquid'] = { icon = '', color = '#95BF47' },
-  }
-
-  local default_icon = {
-    icon = '',
-    color = '#6d8086',
-  }
-
-  local icon = icons_by_file_extension[vim.bo.filetype] and icons_by_file_extension[vim.bo.filetype].icon or default_icon.icon
-  local color = icons_by_file_extension[vim.bo.filetype] and icons_by_file_extension[vim.bo.filetype].color or default_icon.color
-
-  local hl_name = 'StatusLineIcon' .. vim.bo.filetype
-  if not vim.tbl_contains(G.cache, hl_name) then
-    local fine, hl = pcall(api.nvim_get_hl_by_name, 'StatusLineFileName', true)
-    if fine then
-      local hl_bg = hl.background and '#' .. bit.tohex(hl.background, 6)
-      api.nvim_set_hl(0, hl_name, { fg = color, bg = hl_bg })
-      table.insert(G.cache, hl_name)
-    end
-  end
-
-  return ('%%#%s#%s%%#StatusLineFileName#'):format(hl_name, icon)
-end
-
 function pd.mode()
   local alias = alias_mode()
   local result = {
@@ -153,8 +94,6 @@ function pd.fileinfo()
     local name = vim.fn.expand('%:.:t')
     if name ~= '' then
       name = ('%%#StatusLineFileName#%s'):format(name)
-      local icon = get_icon()
-      name = ('%s%s'):format(icon, (' %s'):format(name))
       path = ('%s%s%%m'):format(path, (' %s'):format(name))
     end
 

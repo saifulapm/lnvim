@@ -65,16 +65,16 @@ return {
       }
 
       local cmp = require('cmp')
-      local luasnip = require('luasnip')
+      -- local luasnip = require('luasnip')
       local function shift_tab(fallback)
         if not cmp.visible() then return fallback() end
-        if luasnip.jumpable(-1) then luasnip.jump(-1) end
+        -- if luasnip.jumpable(-1) then luasnip.jump(-1) end
       end
 
       local function tab(fallback) -- make TAB behave like Android Studio
         if not cmp.visible() then return fallback() end
         if not cmp.get_selected_entry() then return cmp.select_next_item({ behavior = cmp.SelectBehavior.Select }) end
-        if luasnip.expand_or_jumpable() then return luasnip.expand_or_jump() end
+        -- if luasnip.expand_or_jumpable() then return luasnip.expand_or_jump() end
         cmp.confirm()
       end
 
