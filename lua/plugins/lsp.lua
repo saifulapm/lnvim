@@ -9,6 +9,11 @@ local function trim(str)
   return str
 end
 
+local without_root_file = function(...)
+  local files = { ... }
+  return function(utils) return not utils.root_has_file(files) end
+end
+
 return {
   -- lspconfig
   {
@@ -107,16 +112,7 @@ return {
       table.insert(
         opts.sources,
         nls.builtins.formatting.prettierd.with({
-          condition = function(utils)
-            return utils.root_has_file({
-              '.eslintrc',
-              '.eslintrc.js',
-              '.eslintrc.cjs',
-              '.eslintrc.yaml',
-              '.eslintrc.yml',
-              '.eslintrc.json',
-            })
-          end,
+          condition = without_root_file('.eslintrc', '.eslintrc.js', '.eslintrc.cjs', '.eslintrc.yaml', '.eslintrc.yml', '.eslintrc.json'),
         })
       )
 
