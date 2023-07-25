@@ -28,6 +28,7 @@ return {
           side_padding = 0,
           winhighlight = 'Normal:CmpPmenu,CursorLine:CmpSel,Search:PmenuSel',
           scrollbar = false,
+          border = 'shadow',
           col_offset = -3,
         },
         documentation = { border = border('CmpDocBorder'), winhighlight = 'Normal:CmpDoc' },

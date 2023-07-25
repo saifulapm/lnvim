@@ -49,11 +49,11 @@ vim.keymap.set('n', 'g/', function()
 end, { desc = 'Open plugin directly to github' })
 
 -- Clipboard
--- vim.keymap.set({ 'n', 'x' }, '<leader>p', '"+p', { desc = 'Clipboard p' })
--- vim.keymap.set({ 'n', 'x' }, '<leader>P', '"+P', { desc = 'Clipboard P' })
+vim.keymap.set({ 'n', 'x' }, '<leader>p', '"+p', { desc = 'Clipboard p' })
+vim.keymap.set({ 'n', 'x' }, '<leader>P', '"+P', { desc = 'Clipboard P' })
 vim.keymap.set({ 'n', 'x' }, '<leader>y', '"+y', { desc = 'Clipboard y' })
--- vim.keymap.set('n', '<leader>Y', '"+y$', { desc = 'Clipboard Y' })
--- vim.keymap.set('n', '<leader>d', '"+d', { desc = 'Clipboard d' })
+vim.keymap.set('n', '<leader>Y', '"+y$', { desc = 'Clipboard Y' })
+vim.keymap.set('n', '<leader>d', '"+d', { desc = 'Clipboard d' })
 
 vim.keymap.set('x', 'cn', '*``cgn')
 vim.keymap.set('x', 'cN', '*``cgN')

@@ -71,14 +71,6 @@ return {
     },
   },
   {
-    'numToStr/FTerm.nvim',
-    opts = { hl = 'NormalFloat', dimensions = { height = 0.4, width = 0.9 } },
-    keys = {
-      { '<A-t>', function() require('FTerm').toggle() end, desc = 'Toggle Terminal' },
-      { '<A-t>', function() require('FTerm').toggle() end, desc = 'Toggle Terminal', mode = 't' },
-    },
-  },
-  {
     'RRethy/vim-illuminate',
     opts = { delay = 200, large_file_cutoff = 5000 },
   },
@@ -113,6 +105,16 @@ return {
       { '<localleader>7', function() require('harpoon.ui').nav_file(7) end, desc = 'Harpoon Goto 7' },
       { '<localleader>8', function() require('harpoon.ui').nav_file(8) end, desc = 'Harpoon Goto 8' },
       { '<localleader>9', function() require('harpoon.ui').nav_file(9) end, desc = 'Harpoon Goto 9' },
+    },
+  },
+  {
+    'folke/zen-mode.nvim',
+    cmd = 'ZenMode',
+    opts = {
+      plugins = {
+        kitty = { enabled = true, font = '+2' },
+        tmux = { enabled = true },
+      },
     },
   },
 }
